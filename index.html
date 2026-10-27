@@ -2638,7 +2638,7 @@ function makeIcon(){ // versión de un solo archivo: el icono se dibuja aquí. E
 }
 /* Icono: insignia de tres galones dorados, sin texto, a sangre (iOS redondea las esquinas).
    v: 1 sola · 2 medallón · 3 marco interior redondeado · 4 escudo. Se usa ICON_V. */
-var ICON_V=2;
+var ICON_V=1;
 function drawIcon(sz,v){
   v=v||ICON_V;var c=document.createElement("canvas");c.width=c.height=sz;var x=c.getContext("2d"),k=sz/512;x.scale(k,k);
   // fondo: negro oliva con luz central, viñeta y textura fina
