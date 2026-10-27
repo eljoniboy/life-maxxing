@@ -566,7 +566,7 @@ body.idle .bg i,body.epicon .bg i{animation-play-state:paused}
 .ep-ring.r1{animation-delay:.55s}.ep-ring.r2{animation-delay:1.27s}.ep-ring.r3{animation-delay:1.99s;border-width:3px}
 @keyframes epring{0%{opacity:.9;transform:scale(.3)}100%{opacity:0;transform:scale(6)}}
 .ep-embers{position:absolute;inset:0;pointer-events:none}
-.ep-embers i{position:absolute;bottom:-12px;left:var(--x);width:var(--s);height:var(--s);border-radius:50%;background:#f3cf86;box-shadow:0 0 7px #e3a54a;opacity:0;animation:ember var(--d) ease-out calc(.6s + var(--w)) infinite}
+.ep-embers i{position:absolute;bottom:-12px;left:var(--x);width:var(--s);height:var(--s);border-radius:50%;background:#f3cf86;box-shadow:0 0 7px #e3a54a;opacity:0;animation:ember var(--d) ease-out calc(.6s + var(--w)) 2}
 @keyframes ember{0%{opacity:0;transform:translate3d(0,0,0)}15%{opacity:1}100%{opacity:0;transform:translate3d(var(--dx),-72vh,0)}}
 .ep-c{position:relative;text-align:center;padding:0 24px;max-width:420px}
 .k-day .ep-c{animation:epshake .42s linear .56s,epshake .38s linear 1.28s,epshake .6s linear 2s}
@@ -577,7 +577,12 @@ body.idle .bg i,body.epicon .bg i{animation-play-state:paused}
 .ep-t{font-family:var(--serif);font-style:italic;font-size:22px;line-height:1.3;color:var(--ink);margin-top:10px;animation:epin .6s ease 2.1s both}
 .ep-s{font-family:var(--mono);font-size:11px;color:var(--tx2);letter-spacing:.06em;margin-top:8px;animation:epin .6s ease 2.4s both}
 @keyframes epin{from{opacity:0;transform:translate3d(0,10px,0)}to{opacity:1;transform:none}}
-.ep-tap{position:absolute;bottom:calc(36px + var(--safe-b));left:0;right:0;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--tx3);animation:epin .5s ease 1.6s both}
+.ep-tap{position:absolute;bottom:calc(36px + var(--safe-b));left:0;right:0;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--tx3);animation:epin .5s ease 1s both}
+/* reposo tras la celebración: sin partículas ni bucles pesados; solo el aviso respira (opacidad, barato) */
+#epic.idle .ep-tap{animation:eptap 2.4s ease-in-out infinite;color:var(--brass2)}
+@keyframes eptap{0%,100%{opacity:.9}50%{opacity:.35}}
+.ep-embers{transition:opacity 1.2s ease}#epic.idle .ep-embers{opacity:0}
+#epic.idle .md svg{animation-duration:60s}
 /* semana: estandarte que se despliega, laurel y siete marcas selladas */
 .ep-banner{position:relative;width:min(82vw,330px);transform-origin:50% 0;animation:unfurl 1s cubic-bezier(.2,.9,.3,1) .15s both}
 .ep-banner::before{content:"";position:absolute;top:-7px;left:-16px;right:-16px;height:7px;border-radius:4px;background:linear-gradient(180deg,#f0dcaa,#8a6c34);z-index:1}
@@ -2438,9 +2443,13 @@ function epicNext(){
   E.className="k-"+k;E.innerHTML='<div class="ep-bg"></div>'+h+'<div class="ep-tap">Toca para continuar</div>';E.setAttribute("aria-hidden","false");
   void E.offsetWidth;E.classList.add("show");document.body.classList.add("epicon");
   sfx(k==="day"?"cheer100":(k==="week"?"weekWin":"monthWin"));haptic();
-  var t0=Date.now(),dur=k==="day"?6800:(k==="week"?5600:6400);
-  function close(){if(Date.now()-t0<1200)return;E.onpointerdown=null;clearTimeout(epicT);E.classList.add("out");setTimeout(function(){E.className="";E.innerHTML="";E.setAttribute("aria-hidden","true");document.body.classList.remove("epicon");epicNext();},RM?30:520);}
-  E.onpointerdown=close;epicT=setTimeout(function(){t0=0;close();},dur);
+  /* de verdad "toca para continuar": sin cierre automático; el toque solo cuenta tras la entrada (evita cerrarla sin querer).
+     Al terminar la parte pesada (partículas, destellos) queda un reposo ligero hasta que toques. */
+  var t0=Date.now(),gate=RM?300:1000,closed=false;clearTimeout(epicT);
+  epicT=setTimeout(function(){if(!closed)E.classList.add("idle");},RM?400:(k==="day"?7600:(k==="week"?5200:6400)));
+  function close(){if(closed||Date.now()-t0<gate)return;closed=true;E.onpointerdown=null;document.removeEventListener("keydown",kd,true);clearTimeout(epicT);E.classList.add("out");setTimeout(function(){E.className="";E.innerHTML="";E.setAttribute("aria-hidden","true");document.body.classList.remove("epicon");epicNext();},RM?30:520);}
+  function kd(e){if(e.key==="Enter"||e.key===" "||e.key==="Escape"){e.preventDefault();e.stopPropagation();close();}}
+  E.onpointerdown=function(e){if(e&&e.preventDefault)e.preventDefault();close();};document.addEventListener("keydown",kd,true);
 }
 /* Semana conquistada: checklist semanal al 100 % (todos los objetivos desbloqueados), o los 7 días registrados con promedio ≥ 80. Una vez por semana. */
 function checkWeekWin(w){
@@ -2781,7 +2790,7 @@ var hidAt=0;document.addEventListener("visibilitychange",function(){if(document.
 /* gancho para pruebas */
 window.__lm={get S(){return S;},drawIcon:drawIcon,STATS:STATS,WEEKLY:WEEKLY,MILESTONES:MILESTONES,NUMS:NUMS,trackersFor:trackersFor,statPowers:statPowers,scoreOf:scoreOf,streakInfo:streakInfo,xpInfo:xpInfo,
   sfx:sfx,Sfx:Sfx,sndMeasure:sndMeasure,show:show,saveGame:saveGame,getSlots:getSlots,importText:importText,mergeIn:mergeIn,
-  seed:function(o){S=normalize(o);reindex();invalidate();syncLvl();persist(true);renderAll();},render:renderAll,launch:runLaunch,onb:openOnb,insignia:insignia,rankName:rankName,setCur:function(d){cur=d;renderToday();}};
+  seed:function(o){S=normalize(o);reindex();invalidate();syncLvl();persist(true);renderAll();},render:renderAll,launch:runLaunch,onb:openOnb,epic:epic,insignia:insignia,rankName:rankName,setCur:function(d){cur=d;renderToday();}};
 })();
 </script>
 </body>
