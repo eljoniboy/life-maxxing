@@ -2429,7 +2429,7 @@ function epicNext(){
   if(k==="day"){
     h='<div class="ep-flash"></div><div class="ep-rays"></div><div class="ep-ring r1"></div><div class="ep-ring r2"></div><div class="ep-ring r3"></div><div class="ep-embers">';
     for(i=0;i<34;i++)h+='<i style="--x:'+(Math.random()*100).toFixed(1)+'%;--d:'+(1.6+Math.random()*2.2).toFixed(2)+'s;--w:'+(Math.random()*.9).toFixed(2)+'s;--s:'+(2+Math.random()*4).toFixed(1)+'px;--dx:'+((Math.random()*2-1)*60).toFixed(0)+'px"></i>';
-    h+='</div><div class="ep-c"><div class="ep-k">Día perfecto · batalla ganada</div><div class="ep-100">100</div><div class="ep-t">Descansa, soldado.</div><div class="ep-s">Puntuación perfecta'+(o.st?' · racha '+o.st:"")+'</div></div>';
+    h+='</div><div class="ep-c"><div class="ep-k">Día perfecto · batalla ganada</div><div class="ep-100">100</div><div class="ep-t">Descansa, '+esc(o.rank||rankName(xpInfo().lvl).toLocaleLowerCase("es-MX"))+'.</div><div class="ep-s">Puntuación perfecta'+(o.st?' · racha '+o.st:"")+'</div></div>';
   }else if(k==="week"){
     h='<div class="ep-flash dim"></div><div class="ep-banner"><div class="bn"><div class="ep-k">Semana conquistada</div><svg class="laurel" viewBox="0 0 200 90"><path d="M100 84C70 82 40 66 26 30M100 84C130 82 160 66 174 30" fill="none" stroke="#e3c98d" stroke-width="2.2"/>';
     for(i=0;i<7;i++){var a=i/6,xL=26+a*60,yL=30+a*46;h+='<ellipse cx="'+xL.toFixed(1)+'" cy="'+yL.toFixed(1)+'" rx="9" ry="4" transform="rotate('+(-40+a*40)+' '+xL.toFixed(1)+' '+yL.toFixed(1)+')" fill="#c4a15a" style="--i:'+i+'"/><ellipse cx="'+(200-xL).toFixed(1)+'" cy="'+yL.toFixed(1)+'" rx="9" ry="4" transform="rotate('+(40-a*40)+' '+(200-xL).toFixed(1)+' '+yL.toFixed(1)+')" fill="#c4a15a" style="--i:'+i+'"/>';}
