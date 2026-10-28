@@ -1196,6 +1196,7 @@ input,select,textarea{font-size:16px!important}
 "use strict";
 var RM = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
 var KEY="lifemaxxing.v2", SLOTKEY="lifemaxxing.slots", TKEY="lifemaxxing.timer", OLDKEY="maxstats.v1";
+var WIPED=false; // pt32: tras "Borrar todos los datos" nada vuelve a escribir en el almacenamiento (ni autoguardado al salir)
 
 /* =================== DEFINICIONES =================== */
 var CATS=[
@@ -1775,6 +1776,7 @@ function load(){
 function syncLvl(){S.meta.lvlSeen=xpInfo().lvl;}
 var storeOK=true,memSlots=null;
 function persist(force){
+  if(WIPED)return false; // pt32
   if(!force&&!S.settings.autosave)return false;
   try{localStorage.setItem(KEY,JSON.stringify(S));storeOK=true;return true;}catch(e){storeOK=false;return false;} // sin aviso: si el almacenamiento está bloqueado (vista previa), la app sigue en memoria
 }
@@ -1784,6 +1786,7 @@ function isDirty(){return !!S.meta.lastChange&&(!S.meta.lastSave||S.meta.lastCha
 /* --- puntos de guardado --- */
 function getSlots(){if(memSlots)return memSlots.slice();try{return JSON.parse(localStorage.getItem(SLOTKEY)||"[]");}catch(e){return [];}}
 function setSlots(a){
+  if(WIPED)return false; // pt32
   var b=a.slice();
   while(a.length){try{localStorage.setItem(SLOTKEY,JSON.stringify(a));memSlots=null;return true;}catch(e){if(e&&(e.name==="SecurityError"||/insecure|denied/i.test(e.message||""))){memSlots=b;return true;}a.pop();}}
   try{localStorage.setItem(SLOTKEY,"[]");}catch(e){memSlots=b;}return false;
@@ -2499,7 +2502,7 @@ $("rkList").addEventListener("click",function(e){var r=e.target.closest(".rkrow"
 /* =================== ENFOQUE =================== */
 var T={dur:25,end:null,rem:null,label:""};
 try{var tj=JSON.parse(localStorage.getItem(TKEY)||"null");if(tj)T=Object.assign(T,tj);}catch(e){}
-function saveT(){tSync();try{localStorage.setItem(TKEY,JSON.stringify(T));}catch(e){}}
+function saveT(){if(WIPED)return;tSync();try{localStorage.setItem(TKEY,JSON.stringify(T));}catch(e){}}
 function setPreset(m){if(T.end)return;T.dur=m;T.rem=null;saveT();qa("#presets button").forEach(function(b){b.classList.toggle("act",+b.getAttribute("data-m")===m);});paintTimer();}
 function remaining(){if(T.end)return Math.max(0,T.end-Date.now());if(T.rem!=null)return T.rem;return T.dur*60000;}
 function startTimer(){
@@ -2688,7 +2691,15 @@ $("expCsv").onclick=function(){
   var csv="\ufeff"+rows.map(function(r){return r.map(function(c){c=String(c);return /[",\n;]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c;}).join(",");}).join("\n");
   var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="life-maxxing-"+todayIso()+".csv";document.body.appendChild(a);a.click();setTimeout(function(){a.remove();},1000);sfx("export");
 };
-$("resetAll").onclick=function(){if(!confirm("¿Borrar TODO? Se creará antes un punto de guardado por si te arrepientes."))return;if(!confirm("Última confirmación: ¿borrar todos los datos?"))return;saveGame(true);S=defaultState();reindex();invalidate();persist(true);renderAll();sfx("delete");toast("Datos borrados (puedes restaurar desde Puntos de guardado)");};
+/* pt32: borrar todo = reiniciar la app como la primera vez (pantalla de carga → animación inicial → introducción).
+   Se borran solo las claves de la app (el dominio github.io lo comparten otros sitios); el service worker y su caché se quedan para que siga funcionando sin conexión. */
+function wipeAll(){
+  WIPED=true;
+  [window.localStorage,window.sessionStorage].forEach(function(st){try{if(!st)return;var ks=[];for(var i=0;i<st.length;i++){var k=st.key(i);if(/^(lifemaxxing|maxstats)\./.test(k))ks.push(k);}ks.forEach(function(k){st.removeItem(k);});}catch(e){}});
+  memSlots=null;onbMem=false;
+  try{location.replace(location.pathname);}catch(e){location.reload();} // recarga limpia, sin parámetros ni #
+}
+$("resetAll").onclick=function(){if(!confirm("¿Borrar TODO? La app volverá a empezar como la primera vez: progreso, hábitos, ajustes, puntos de guardado y récords. No se puede deshacer."))return;if(!confirm("Última confirmación: ¿borrar todos los datos?"))return;sfx("delete");wipeAll();};
 /* =================== pt9: FRASES · CAMPAÑA · COACH · CELEBRACIONES · INSIGNIA =================== */
 function dnOf(d){return Math.floor((parse(d)-parse(S.start))/864e5)+1;}
 function monthOfIso(d){return clamp(Math.ceil(Math.max(1,dnOf(d))/30.4),1,12);}
@@ -3018,7 +3029,7 @@ function setSecBg(v){var k=SEC_BG[v]||"ops";if(v==="hoy"){var sc=scoreOf(cur);if
    Arte original (canvas), sin sonido; los toques desbloquean el audio para la animación de arranque. */
 var LDKEY="lifemaxxing.ldr";
 function ldMem(){try{return JSON.parse(localStorage.getItem(LDKEY)||"{}")||{};}catch(e){return {};}}
-function ldPut(o){try{localStorage.setItem(LDKEY,JSON.stringify(o));}catch(e){}}
+function ldPut(o){if(WIPED)return;try{localStorage.setItem(LDKEY,JSON.stringify(o));}catch(e){}}
 function ldOff(){if(window.__ldOff)return true;try{return localStorage.getItem("lifemaxxing.ldrOff")==="1";}catch(e){return false;}} // solo pruebas automáticas
 function ldDur(){var r=Math.random();return (r<.5?6:r<.72?7:r<.86?8:r<.95?9:10)*1000;}
 // hora del día del dispositivo: am 05–11:59 preparación · pm 12–18:59 batalla · nt 19–04:59 descanso
@@ -4466,7 +4477,7 @@ document.addEventListener("visibilitychange",function(){
   else{if(T.end&&Date.now()>=T.end)completeTimer();if(todayIso()!==lastDay){lastDay=todayIso();cur=lastDay;renderAll();}}
 });
 var lastDay=todayIso();
-window.addEventListener("beforeunload",function(e){if(!S.settings.autosave&&isDirty()){e.preventDefault();e.returnValue="Tienes cambios sin guardar.";return e.returnValue;}});
+window.addEventListener("beforeunload",function(e){if(WIPED)return;if(!S.settings.autosave&&isDirty()){e.preventDefault();e.returnValue="Tienes cambios sin guardar.";return e.returnValue;}});
 window.addEventListener("pagehide",function(){if(S.settings.autosave)persist();});
 
 /* --- desbloqueo de audio en el primer toque (iOS) --- */
@@ -4597,7 +4608,7 @@ function closeOnb(){
   var w=$("oWhy").value.trim(),d=$("oStart").value;
   if(w)S.why=w;if(/^\d{4}-\d{2}-\d{2}$/.test(d)&&d!==S.start){var tt=todayIso(),hi=addDays(tt,7);if(defaultStart()>hi)hi=defaultStart();S.start=d<tt?tt:(d>hi?hi:d);}
   S.settings.sound=$("oSnd").classList.contains("on");
-  onbMem=true;S.meta.onb=1;try{localStorage.setItem(ONBKEY,"1");}catch(e){}
+  onbMem=true;S.meta.onb=1;if(!WIPED)try{localStorage.setItem(ONBKEY,"1");}catch(e){}
   changed();
   var O=$("onb");O.classList.add("out");Sfx.unlock();sfx("oath");haptic();
   setTimeout(function(){O.classList.add("gone");O.classList.remove("in","out");cur=todayIso();show("hoy",true);renderAll();var n=dayNum();toast(n>=1?("Campaña en marcha. Día "+n+" de 365."):"Campaña lista. Empieza el "+S.start+".");},RM?20:400);
