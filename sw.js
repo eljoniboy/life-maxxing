@@ -1,5 +1,5 @@
 /* Life Maxxing: red primero, caché como respaldo (abre sin conexión y siempre toma la última versión cuando hay red) */
-var C="lm-287a5750e2";
+var C="lm-ac725444b6";
 self.addEventListener("install",function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll(["./","index.html","manifest.webmanifest","icon-180.png","icon-192.png","icon-512.png"]);}).then(function(){return self.skipWaiting();}));});
 self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(k){return Promise.all(k.filter(function(n){return n!==C;}).map(function(n){return caches.delete(n);}));}).then(function(){return self.clients.claim();}));});
 self.addEventListener("fetch",function(e){var r=e.request;if(r.method!=="GET"||new URL(r.url).origin!==location.origin)return;
