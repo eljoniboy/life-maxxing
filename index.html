@@ -912,6 +912,10 @@ body{width:100%;max-width:100%}
 @supports (overflow:clip){html,body,main{overflow-x:clip}}
 /* enfocar un campo no debe acercar la vista en iOS (necesita >= 16 px) */
 input,select,textarea{font-size:16px!important}
+/* pt33: en iPhone (WebKit) la sombra exterior de la tarjeta de vidrio de arriba (0 22px 40px -26px, se extiende ~36px hacia abajo)
+   quedaba en una capa compuesta recortada con borde recto y se pintaba ENCIMA del bloque siguiente cuando ese bloque no tenía capa propia:
+   tapaba el borde superior de los accesos rápidos (Hoy) y del selector de Campaña. Se les da contexto y capa propia por encima de la tarjeta previa. */
+.qagrid,#semSeg{position:relative;z-index:1;-webkit-transform:translateZ(0);transform:translateZ(0)}
 
 </style>
 </head>
