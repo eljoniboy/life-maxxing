@@ -2,7 +2,7 @@
 <html lang="es-MX">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -901,6 +901,17 @@ body.lite .glass:not(.top):not(.tabbar):not(.toast){-webkit-backdrop-filter:none
 .pmeta .tg.ext{color:#b9c27a;border-color:rgba(185,194,122,.35)}
 .pmeta .tg.off{color:var(--tx3);border-style:dashed}
 .logbook .lgl.s-rm .pr input::placeholder{color:var(--tx3);font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+
+/* ===== pt31: sin zoom accidental y sin temblor horizontal al cambiar de sección ===== */
+/* el doble toque ya no hace zoom (iOS ignora user-scalable=no; touch-action sí lo respeta) */
+html,body,button,a,label,input,select,textarea,[role=button],.glass,.card,.hab,.tabbar,#nav,#nav button,#insig{touch-action:manipulation}
+/* el documento nunca es más ancho que la pantalla: la entrada de sección (±22 px con rebote) desbordaba 8 px
+   y, tras un zoom, iOS deja paneo horizontal y la página entera saltaba con cada cambio de pestaña */
+html{width:100%;overflow-x:hidden}
+body{width:100%;max-width:100%}
+@supports (overflow:clip){html,body,main{overflow-x:clip}}
+/* enfocar un campo no debe acercar la vista en iOS (necesita >= 16 px) */
+input,select,textarea{font-size:16px!important}
 
 </style>
 </head>
@@ -4431,7 +4442,7 @@ function show(v,silent){
   var prev=VIEWS.indexOf(view),nx=VIEWS.indexOf(v);
   qa("#nav button").forEach(function(b){b.classList.toggle("act",b.getAttribute("data-v")===v);});
   qa(".view").forEach(function(s){s.classList.remove("act","in","inL");});
-  var el=$("v-"+v);view=v;el.classList.add("act");setSecBg(v);if(!RM)el.classList.add(nx>=prev?"in":"inL");
+  var el=$("v-"+v);view=v;el.classList.add("act");setSecBg(v);var vz=window.visualViewport&&Math.abs(visualViewport.scale-1)>.01;if(!RM&&!vz)el.classList.add(nx>=prev?"in":"inL"); // pt31: con zoom activo no hay deslizamiento lateral
   moveInd();
   renderView();
   window.scrollTo(0,0);requestAnimationFrame(function(){window.scrollTo(0,0);});
@@ -4609,6 +4620,22 @@ runLaunch(function(){setTimeout(p2Check,400);if(firstRun)openOnb();else{if(!S.me
 var hidAt=0;document.addEventListener("visibilitychange",function(){if(document.hidden)hidAt=Date.now();else if(hidAt&&Date.now()-hidAt>6e5&&!launching&&$("onb").classList.contains("gone"))runLaunch();});
 
 /* gancho para pruebas */
+/* pt31: bloquear el zoom (pellizco y doble toque) sin perder toques rápidos */
+(function(){
+  function no(e){if(e.cancelable)e.preventDefault();}
+  ["gesturestart","gesturechange","gestureend"].forEach(function(t){document.addEventListener(t,no,{passive:false});});
+  document.addEventListener("touchmove",function(e){if(e.touches&&e.touches.length>1)no(e);},{passive:false});
+  document.addEventListener("dblclick",function(e){if(!(e.target.closest&&e.target.closest("#launch")))no(e);},{passive:false});
+  var lt=0,sx=0,sy=0;
+  document.addEventListener("touchstart",function(e){var t=e.touches[0];if(t){sx=t.clientX;sy=t.clientY;}},{passive:true,capture:true});
+  document.addEventListener("touchend",function(e){var t=e.changedTouches[0],tg=e.target;if(!t||e.touches.length)return;
+    if(Math.abs(t.clientX-sx)>10||Math.abs(t.clientY-sy)>10)return; // fue un desplazamiento, no un toque
+    var now=Date.now(),dt=now-lt;lt=now;if(dt>=300||!e.cancelable)return;
+    var el=tg.nodeType===1?tg:tg.parentElement;if(!el||el.closest("#launch,input,textarea,select,[contenteditable]"))return; // pantallas de carga: intactas
+    e.preventDefault(); // anula el zoom por doble toque de iOS…
+    el.dispatchEvent(new MouseEvent("click",{bubbles:true,cancelable:true,view:window,clientX:t.clientX,clientY:t.clientY,screenX:t.screenX,screenY:t.screenY})); // …y entrega el clic igual (también sobre SVG), para que el segundo toque cuente
+  },{passive:false});
+})();
 window.__lm={get S(){return S;},drawIcon:drawIcon,STATS:STATS,WEEKLY:WEEKLY,MILESTONES:MILESTONES,NUMS:NUMS,trackersFor:trackersFor,statPowers:statPowers,scoreOf:scoreOf,streakInfo:streakInfo,xpInfo:xpInfo,
   sfx:sfx,Sfx:Sfx,sndMeasure:sndMeasure,show:show,saveGame:saveGame,getSlots:getSlots,importText:importText,mergeIn:mergeIn,
   seed:function(o){S=normalize(o);reindex();invalidate();syncLvl();persist(true);renderAll();},render:renderAll,launch:runLaunch,onb:openOnb,epic:epic,insignia:insignia,rankName:rankName,setCur:function(d){cur=d;renderToday();},p2Count:p2Count,p2Check:p2Check,xpI:xpInfo};
