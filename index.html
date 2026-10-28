@@ -723,10 +723,129 @@ body.subopen .totop{visibility:hidden}
 @keyframes lgout{to{opacity:0;transform:scale(1.06)}}
 @media (prefers-reduced-motion:reduce){#launch .lgate svg,#launch .lgate .lgt{animation:none}}
 
+/* ===== pt20: fondo vivo por sección (una capa animada por sección; fundido 500 ms) ===== */
+.sbg{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.sbg .sl{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s linear .5s;overflow:hidden}
+.sbg .sl b{position:absolute;display:block;will-change:transform;animation-play-state:paused}
+body[data-bg=dawn] .s-dawn,body[data-bg=topo] .s-topo,body[data-bg=vig] .s-vig,body[data-bg=map] .s-map,body[data-bg=steel] .s-steel{opacity:1;visibility:visible;transition:opacity .5s ease,visibility 0s}
+body[data-bg=dawn] .s-dawn b,body[data-bg=topo] .s-topo b,body[data-bg=vig] .s-vig b,body[data-bg=map] .s-map b,body[data-bg=steel] .s-steel b{animation-play-state:running}
+body.idle .sbg .sl b,body.hidden .sbg .sl b,body.scrolling .sbg .sl b,body.epicon .sbg .sl b{animation-play-state:paused!important}
+body.lite .sbg .sl b{animation:none!important}
+/* Hoy: amanecer de operaciones, bruma cálida y polvo en suspensión */
+.s-dawn{background:radial-gradient(120% 60% at 50% 108%,rgba(206,128,62,.16),rgba(150,90,40,.06) 45%,transparent 70%),linear-gradient(0deg,rgba(196,161,90,.05),transparent 40%)}
+.s-dawn b{inset:-30%;background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><circle cx='160' cy='149' r='1.4' fill='#f0dcaa' fill-opacity='0.22'/><circle cx='101' cy='12' r='1.4' fill='#f0dcaa' fill-opacity='0.11'/><circle cx='219' cy='34' r='0.8' fill='#f0dcaa' fill-opacity='0.13'/><circle cx='30' cy='146' r='0.8' fill='#f0dcaa' fill-opacity='0.26'/><circle cx='46' cy='26' r='1.0' fill='#f0dcaa' fill-opacity='0.23'/><circle cx='95' cy='24' r='1.0' fill='#f0dcaa' fill-opacity='0.11'/><circle cx='15' cy='158' r='0.7' fill='#f0dcaa' fill-opacity='0.24'/><circle cx='109' cy='198' r='0.8' fill='#f0dcaa' fill-opacity='0.22'/><circle cx='116' cy='92' r='0.8' fill='#f0dcaa' fill-opacity='0.26'/><circle cx='178' cy='199' r='0.7' fill='#f0dcaa' fill-opacity='0.21'/><circle cx='134' cy='126' r='1.3' fill='#f0dcaa' fill-opacity='0.25'/><circle cx='73' cy='155' r='1.4' fill='#f0dcaa' fill-opacity='0.12'/><circle cx='107' cy='42' r='1.2' fill='#f0dcaa' fill-opacity='0.13'/><circle cx='125' cy='107' r='0.5' fill='#f0dcaa' fill-opacity='0.23'/><circle cx='195' cy='142' r='1.0' fill='#f0dcaa' fill-opacity='0.28'/><circle cx='80' cy='87' r='1.1' fill='#f0dcaa' fill-opacity='0.22'/></svg>");background-size:220px 220px;opacity:.55;animation:sbDust 70s linear infinite alternate}
+@keyframes sbDust{from{transform:translate3d(0,0,0)}to{transform:translate3d(-9%,-12%,0)}}
+/* Stats: cuadrícula topográfica + barrido de radar */
+.s-topo{background:repeating-radial-gradient(circle at 82% 18%,transparent 0 58px,rgba(154,171,94,.045) 58px 59px),repeating-linear-gradient(0deg,rgba(154,171,94,.028) 0 1px,transparent 1px 34px),repeating-linear-gradient(90deg,rgba(154,171,94,.028) 0 1px,transparent 1px 34px)}
+.s-topo b{width:180vmax;height:180vmax;left:calc(82% - 90vmax);top:calc(18% - 90vmax);border-radius:50%;background:conic-gradient(from 0deg,rgba(154,171,94,.13),rgba(154,171,94,.03) 28deg,transparent 52deg 360deg);animation:sbRadar 12s linear infinite}
+@keyframes sbRadar{to{transform:rotate(360deg)}}
+/* Enfoque: viñeta que respira, todo converge al centro */
+.s-vig{background:radial-gradient(75% 60% at 50% 42%,transparent 35%,rgba(0,0,0,.5) 100%)}
+.s-vig b{inset:0;background:radial-gradient(55% 40% at 50% 40%,rgba(196,161,90,.11),transparent 70%);opacity:.35;animation:sbPulse 5.5s ease-in-out infinite alternate;will-change:opacity}
+@keyframes sbPulse{to{opacity:1}}
+/* Campaña: mapa de curvas de nivel que se desplaza */
+.s-map{background:radial-gradient(90% 70% at 30% 20%,rgba(126,42,37,.07),transparent 70%)}
+.s-map b{inset:-25%;background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'><g fill='none' stroke='#d8cfb6' stroke-opacity='.07' stroke-width='1.2'><path d='M196 190 L195 193 L193 195 L190 197 L186 198 L183 198 L181 199 L180 201 L179 203 L178 206 L176 208 L173 210 L170 211 L167 211 L163 210 L161 209 L158 207 L155 206 L153 204 L151 202 L151 199 L151 197 L152 194 L153 192 L154 190 L153 188 L152 186 L151 184 L150 180 L150 177 L151 175 L154 173 L157 172 L161 172 L164 173 L167 173 L170 173 L173 173 L175 173 L178 174 L181 175 L183 176 L185 178 L187 179 L189 181 L191 183 L193 185 L195 187Z'/><path d='M224 190 L222 196 L218 200 L211 204 L204 206 L198 207 L194 209 L191 213 L189 218 L187 223 L183 228 L177 232 L170 234 L163 234 L156 232 L150 229 L145 226 L139 223 L134 219 L131 215 L129 209 L130 204 L132 198 L134 194 L136 190 L135 186 L133 182 L130 176 L128 170 L128 163 L131 158 L136 154 L144 153 L151 153 L158 154 L164 155 L170 155 L176 155 L181 155 L187 156 L193 158 L197 161 L201 164 L205 168 L209 171 L214 175 L219 179 L223 184Z'/><path d='M252 190 L250 199 L242 206 L232 211 L221 214 L212 217 L206 220 L202 225 L199 232 L195 240 L189 248 L180 254 L170 257 L159 256 L149 253 L140 249 L131 245 L123 240 L116 234 L110 227 L108 219 L109 211 L112 203 L116 196 L118 190 L117 184 L114 178 L109 169 L106 159 L106 149 L110 141 L119 135 L130 133 L141 133 L152 135 L161 137 L170 137 L178 137 L187 137 L196 138 L204 141 L212 146 L218 151 L224 156 L230 162 L237 167 L244 174 L250 181Z'/><path d='M281 190 L277 202 L267 211 L253 218 L239 223 L227 226 L219 230 L214 237 L210 246 L204 258 L196 268 L184 276 L170 280 L156 279 L142 275 L130 270 L118 264 L107 257 L97 250 L90 240 L87 229 L88 218 L92 207 L97 198 L100 190 L99 182 L95 173 L88 162 L83 149 L83 136 L89 124 L101 116 L116 113 L132 114 L146 117 L159 119 L170 119 L181 119 L193 119 L205 120 L216 124 L226 130 L234 137 L242 145 L250 152 L260 159 L270 168 L278 178Z'/><path d='M309 190 L304 205 L292 217 L275 226 L256 231 L241 235 L231 240 L225 248 L220 261 L213 275 L202 289 L187 298 L170 303 L152 302 L135 297 L119 290 L105 283 L91 275 L79 265 L70 253 L65 239 L67 225 L72 212 L78 200 L82 190 L81 180 L75 169 L67 155 L61 139 L61 122 L69 107 L84 98 L102 94 L122 95 L140 98 L156 100 L170 101 L184 101 L199 101 L214 103 L228 108 L240 115 L250 124 L260 133 L271 142 L283 152 L295 162 L305 175Z'/><path d='M337 190 L332 207 L317 222 L296 233 L274 239 L256 244 L243 250 L236 260 L230 275 L222 292 L209 309 L191 320 L170 326 L148 324 L128 319 L109 311 L91 302 L75 292 L60 280 L49 266 L44 250 L46 232 L52 216 L60 202 L64 190 L63 178 L56 165 L47 148 L39 128 L39 108 L48 90 L66 79 L89 74 L112 75 L134 79 L153 82 L170 83 L187 83 L205 83 L223 85 L240 91 L254 100 L267 111 L279 122 L291 133 L306 144 L321 157 L332 172Z'/><path d='M477 420 L475 423 L472 425 L469 427 L468 429 L468 431 L468 434 L467 438 L465 441 L462 444 L458 445 L454 444 L450 443 L447 441 L443 440 L441 439 L438 437 L435 436 L433 434 L432 431 L431 429 L430 427 L429 425 L427 422 L424 420 L422 417 L419 413 L419 410 L421 406 L424 404 L429 403 L434 403 L438 403 L442 403 L444 403 L447 402 L450 401 L453 400 L456 400 L460 401 L463 402 L465 404 L468 405 L472 406 L475 408 L477 411 L479 414 L479 417Z'/><path d='M502 420 L497 425 L492 429 L487 433 L485 437 L484 441 L484 448 L482 455 L479 461 L473 465 L465 467 L457 467 L450 464 L443 461 L437 458 L432 456 L427 453 L422 450 L418 446 L415 442 L414 437 L412 433 L410 429 L406 425 L401 420 L395 414 L391 407 L391 400 L394 393 L401 389 L410 387 L419 387 L427 388 L434 388 L439 387 L444 386 L450 384 L456 382 L462 382 L468 383 L474 386 L480 388 L485 391 L491 394 L497 398 L503 402 L506 408 L506 414Z'/><path d='M528 420 L520 428 L512 434 L505 439 L502 444 L501 452 L500 461 L498 471 L493 481 L484 487 L473 490 L461 489 L450 485 L440 481 L431 477 L423 473 L415 469 L408 465 L403 459 L399 452 L396 446 L394 439 L391 433 L385 427 L377 420 L369 411 L363 401 L362 390 L367 381 L377 374 L390 371 L404 371 L416 372 L426 373 L434 372 L442 369 L450 366 L459 364 L468 364 L477 366 L486 369 L494 373 L502 377 L511 381 L520 387 L528 394 L532 402 L532 411Z'/><path d='M553 420 L543 430 L532 438 L523 445 L518 452 L517 462 L516 474 L513 488 L506 500 L495 509 L480 513 L465 511 L450 507 L437 501 L425 495 L415 490 L404 485 L395 479 L387 472 L382 463 L379 454 L376 445 L371 437 L364 429 L353 420 L343 408 L335 395 L334 381 L340 368 L354 359 L371 355 L389 355 L405 357 L418 357 L429 356 L439 353 L450 349 L462 346 L474 346 L486 348 L497 353 L508 358 L519 363 L531 369 L543 376 L553 385 L559 396 L559 408Z'/><path d='M578 420 L565 432 L552 442 L541 451 L535 460 L533 472 L532 488 L529 504 L520 520 L506 531 L488 535 L468 534 L450 528 L434 520 L419 513 L406 507 L393 501 L381 493 L372 484 L365 473 L361 462 L358 451 L352 442 L343 432 L330 420 L316 406 L307 389 L305 371 L313 355 L330 345 L352 340 L374 339 L394 341 L411 342 L424 340 L437 336 L450 331 L465 328 L480 328 L495 331 L509 336 L522 343 L536 349 L551 357 L566 365 L578 376 L586 390 L586 405Z'/><path d='M542 110 L542 112 L541 115 L541 117 L540 119 L538 122 L536 123 L534 125 L531 125 L528 125 L525 124 L522 123 L520 122 L518 122 L516 123 L513 124 L510 125 L506 125 L503 124 L501 122 L501 119 L501 117 L501 114 L501 112 L501 110 L501 108 L501 106 L502 104 L503 102 L505 101 L507 99 L509 98 L510 96 L512 94 L514 92 L517 91 L520 90 L523 91 L526 93 L528 95 L529 98 L529 100 L530 101 L532 102 L534 103 L537 104 L539 106 L541 108Z'/><path d='M568 110 L568 115 L567 120 L565 125 L563 130 L560 135 L556 140 L551 143 L544 144 L537 143 L530 141 L525 138 L520 137 L516 137 L511 139 L504 141 L497 143 L490 142 L483 140 L479 136 L477 130 L477 125 L478 119 L478 114 L478 110 L478 105 L479 101 L480 96 L483 93 L487 89 L491 86 L495 83 L499 79 L502 75 L507 71 L513 67 L520 66 L527 68 L533 72 L537 77 L539 83 L541 88 L543 91 L546 93 L551 95 L557 97 L563 101 L566 105Z'/><path d='M594 110 L595 118 L593 126 L590 134 L587 142 L582 149 L576 156 L567 160 L557 162 L546 161 L536 157 L527 154 L520 151 L513 152 L506 154 L496 158 L485 160 L473 160 L463 156 L457 150 L454 141 L454 132 L455 124 L456 117 L456 110 L455 103 L456 96 L458 89 L463 83 L469 78 L475 73 L481 69 L487 63 L493 56 L500 49 L509 44 L520 42 L531 45 L539 51 L546 59 L549 68 L552 76 L555 81 L561 84 L569 87 L578 90 L586 96 L592 102Z'/><path d='M109 500 L108 502 L108 504 L107 506 L106 507 L104 509 L102 510 L100 510 L98 511 L96 512 L95 514 L92 516 L90 517 L87 518 L84 517 L82 515 L81 513 L80 511 L79 509 L79 507 L78 506 L76 505 L74 504 L72 502 L71 500 L71 498 L71 496 L72 494 L73 492 L74 490 L75 488 L77 486 L80 485 L82 485 L85 486 L88 487 L90 488 L92 490 L93 490 L95 489 L98 489 L101 488 L104 489 L107 490 L108 491 L109 493 L109 496 L109 498Z'/><path d='M133 500 L132 505 L131 509 L129 513 L126 517 L122 520 L117 522 L112 524 L108 526 L104 529 L101 532 L96 536 L90 540 L83 541 L77 540 L72 536 L68 531 L67 525 L65 520 L64 516 L61 514 L57 511 L53 508 L49 504 L46 500 L46 495 L46 490 L48 486 L50 481 L52 476 L56 472 L60 468 L66 465 L72 465 L79 467 L85 470 L90 473 L94 476 L98 476 L102 475 L108 474 L115 473 L123 473 L129 476 L133 480 L135 485 L135 490 L134 495Z'/><path d='M158 500 L157 507 L155 514 L152 521 L147 527 L140 532 L132 535 L125 537 L119 541 L113 545 L107 551 L99 557 L90 562 L80 564 L70 562 L61 556 L56 548 L53 539 L51 532 L49 526 L44 522 L38 518 L31 513 L25 507 L21 500 L20 492 L21 485 L24 478 L27 470 L31 463 L36 456 L43 449 L52 446 L62 445 L73 447 L82 452 L90 458 L96 462 L102 463 L109 461 L119 459 L130 457 L141 458 L151 462 L157 468 L160 476 L160 485 L159 493Z'/><path d='M183 500 L181 510 L179 519 L174 529 L168 537 L158 543 L148 548 L138 551 L129 555 L121 561 L113 569 L102 578 L90 585 L76 588 L62 585 L51 577 L44 566 L40 554 L37 543 L34 535 L28 529 L19 524 L10 518 L2 510 L-4 500 L-5 490 L-4 479 L-0 469 L4 459 L9 449 L16 439 L25 431 L38 426 L52 425 L67 428 L80 435 L90 442 L98 448 L107 449 L117 447 L129 444 L145 442 L160 443 L173 448 L182 457 L186 467 L186 479 L184 490Z'/></g><g fill='none' stroke='#c4a15a' stroke-opacity='.05' stroke-dasharray='4 6'><path d='M0 300 H600 M300 0 V600'/></g></svg>");background-size:600px 600px;animation:sbPan 90s linear infinite alternate}
+@keyframes sbPan{from{transform:translate3d(0,0,0)}to{transform:translate3d(-12%,-7%,0)}}
+/* Ajustes: taller, acero cepillado con un reflejo lento */
+.s-steel{background:repeating-linear-gradient(90deg,rgba(255,255,255,.014) 0 1px,transparent 1px 3px),linear-gradient(180deg,rgba(120,130,140,.06),rgba(20,22,24,.0) 60%)}
+.s-steel b{top:0;bottom:0;left:-100%;width:300%;background:linear-gradient(105deg,transparent 42%,rgba(215,222,230,.055) 50%,transparent 58%);animation:sbSheen 16s ease-in-out infinite alternate}
+@keyframes sbSheen{from{transform:translate3d(-20%,0,0)}to{transform:translate3d(20%,0,0)}}
+@media (prefers-reduced-motion:reduce){.sbg .sl b{animation:none!important}.sbg .sl{transition:none}}
+
+/* ===== pt20: Briefing plegable tipo bitácora ===== */
+#missionCard{padding:0;overflow:hidden}
+#missionCard .bhd{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:12px;width:100%;padding:16px 16px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#missionCard .bhd:active{background:rgba(196,161,90,.04)}
+#missionCard .bhd .bl{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start}
+#missionCard .bhd .mh{display:block}
+#missionCard .bprog{font-family:var(--mono);font-size:12px;color:var(--tx3);border:1px solid var(--line);padding:6px 8px;border-radius:2px;white-space:nowrap}
+#missionCard .bprog b{font-size:17px;color:var(--brass2);font-weight:600}
+#missionCard .bprog.ok{border-color:rgba(154,171,94,.6)}#missionCard .bprog.ok b{color:#b4c477}
+#missionCard .bchev{color:var(--brass);display:flex;transition:transform .45s var(--spring)}
+#missionCard.open .bchev{transform:rotate(180deg)}
+#missionCard .bcoll{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+#missionCard .bcoll.open{grid-template-rows:1fr}
+#missionCard .bcoll>div{overflow:hidden;min-height:0}
+#missionCard .bcoll>div>.logbook{opacity:0;transform:translateY(-6px);transition:opacity .3s ease,transform .45s var(--ease)}
+#missionCard .bcoll.open>div>.logbook{opacity:1;transform:none;transition-delay:.06s}
+.logbook{margin:0 12px 14px;padding:10px 12px 8px 14px;border:1px solid rgba(216,207,182,.12);border-left:2px solid rgba(178,74,62,.55);border-radius:2px;
+  background:repeating-linear-gradient(180deg,transparent 0 27px,rgba(216,207,182,.055) 27px 28px),linear-gradient(180deg,rgba(235,228,209,.035),rgba(235,228,209,.015));position:relative}
+.logbook .lbh{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--tx3);border-bottom:1px dashed rgba(216,207,182,.16);padding-bottom:7px;margin-bottom:4px}
+.logbook .lgl{position:relative;transition:opacity .3s}
+.logbook .lgl .pr{margin:6px 0 8px}
+.logbook .lgl .pr .n{font-family:var(--mono);font-size:11px;letter-spacing:.06em;width:22px;color:var(--ox2,#b4483e)}
+.logbook .lgl .pr input{font-family:var(--serif);font-style:italic;font-size:15.5px;border-bottom:1px solid rgba(216,207,182,.14)}
+.logbook .lgl .pr input::placeholder{color:rgba(235,228,209,.62);font-style:italic}
+.logbook .lgl.gone .pr input::placeholder{color:var(--tx3);font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+.logbook .lgl.gone .pmeta .tg{opacity:.5}
+.logbook .sgx{flex:none;width:30px;height:30px;display:grid;place-items:center;background:none;border:1px solid var(--line);border-radius:2px;color:var(--tx3);cursor:pointer;padding:0}
+.logbook .sgx svg,.num .sx svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:square}
+.logbook .sgx:active{transform:scale(.92);color:#e09a8a}
+.logbook .pmeta{margin-left:32px}
+.logbook .lbtools{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.logbook .lbtools .rf{display:inline-block;font-size:13px;line-height:1}
+.logbook .lbnote{margin:4px 0 8px}
+.logbook .obonus{margin-top:6px}
+.avoidcard{padding:0;margin:12px 0;background:none!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.avoidcard .avoid{margin:0}
+/* ===== pt20: símbolo de área en el encabezado + remate al cumplir ===== */
+.cat .ch .csym{position:relative;flex:none;width:20px;height:20px;display:grid;place-items:center}
+.cat .ch .csym svg{width:18px;height:18px;fill:none;stroke:var(--c);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 0 transparent)}
+.cat.full .ch .csym svg{filter:drop-shadow(0 0 4px var(--c))}
+.cat .ch .csym .cring{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:1.5px solid var(--c);opacity:0;pointer-events:none;display:block}
+.cat.won .ch .csym svg{animation:csymFlare 1.2s cubic-bezier(.2,.8,.2,1)}
+@keyframes csymFlare{0%{transform:scale(1)}18%{transform:scale(1.55) rotate(-8deg);filter:drop-shadow(0 0 10px var(--c)) brightness(1.6)}40%{transform:scale(.92) rotate(3deg)}60%{transform:scale(1.12)}100%{transform:none}}
+.cat.won.full .ch::after{animation:cstamp .55s cubic-bezier(.2,1.4,.4,1) .32s backwards}
+@keyframes cstamp{0%{transform:scale(2.6) rotate(-14deg);opacity:0}60%{transform:scale(.92) rotate(-2deg);opacity:1}100%{transform:rotate(-3deg)}}
+.cat{position:relative}
+.cat .cwin{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden;border-radius:inherit;opacity:0;
+  box-shadow:inset 0 0 0 1px var(--c),inset 0 0 28px color-mix(in srgb,var(--c) 35%,transparent);background:radial-gradient(70% 90% at 12% 18%,color-mix(in srgb,var(--c) 22%,transparent),transparent 70%)}
+.cat .cwin .cswp{position:absolute;top:-10%;bottom:-10%;left:0;width:34%;display:block;background:linear-gradient(90deg,transparent,rgba(255,244,214,.22),transparent)}
+@media (prefers-reduced-motion:reduce){.cat.won .ch .csym svg,.cat.won.full .ch::after{animation:none}}
+/* ===== pt20: registros numéricos con −/+ ===== */
+.nums{gap:12px 10px}
+.num label{display:flex;align-items:center;gap:6px;min-height:14px}
+.num label em{font-style:normal;font-size:8.5px;letter-spacing:.12em;padding:1px 4px;border-radius:2px}
+.num label .cy{color:#c9b27a;border:1px solid rgba(201,178,122,.4)}
+.num label .idl{color:var(--tx3);border:1px dashed rgba(235,228,209,.18)}
+.num .stp{display:flex;align-items:stretch;gap:4px;height:46px}
+.num .sb{flex:none;width:42px;display:grid;place-items:center;padding:0;border:1px solid var(--line);border-radius:3px;background:rgba(235,228,209,.04);color:var(--brass2);cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;transition:background .15s,transform .1s}
+.num .sb svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:square}
+.num .sb:active,.num .sb.hit{background:rgba(196,161,90,.16);transform:scale(.94)}
+.num .sv{position:relative;flex:1;min-width:0}
+.num .sv input{height:46px;width:100%;text-align:center;padding:0 22px 0 6px;font-size:15px}
+.num .sv input::placeholder{color:rgba(235,228,209,.26)}
+.num.carried .sv input{color:#c9b27a;font-style:italic}
+.num .sx{position:absolute;right:1px;top:50%;transform:translateY(-50%);width:24px;height:34px;display:none;place-items:center;padding:0;background:none;border:0;color:var(--tx3);cursor:pointer}
+.num.has .sx,.num.carried .sx{display:grid}
+.num.money .sv input{text-align:left;padding-left:10px}
+.num .curb{flex:none;width:52px;padding:0;border:1px solid var(--line);border-radius:3px;background:rgba(235,228,209,.04);color:var(--brass2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;cursor:pointer}
+.num .curb:active{transform:scale(.95)}
+/* ===== pt20: Fase 2 y pre-campaña ===== */
+.p2box{border:1px solid var(--line);border-radius:3px;padding:10px 12px;margin:0 0 12px;background:rgba(196,161,90,.04)}
+.p2box .p2h{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass2);margin-bottom:8px}
+.p2box .p2h span{color:var(--tx2)}
+.p2box .bar{height:6px;background:rgba(235,228,209,.07);overflow:hidden;margin-bottom:8px}
+.p2box .bar i{display:block;height:100%;background:linear-gradient(90deg,#8a6c34,#e3c98d);transform-origin:left;transition:transform .7s var(--spring)}
+.p2box.on .bar i{background:linear-gradient(90deg,#6f7d3a,#b4c477)}
+.p2tag{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#d0a650;border:1px dashed rgba(208,166,80,.5);padding:2px 6px;margin-bottom:6px}
+.hero .dn.pre{font-size:44px;letter-spacing:.02em}
+.hero .dn.pre small{font-size:13px;margin:0 6px 0 2px}
+.hero .prehype{grid-column:1/-1;margin-top:12px;font-family:var(--serif);font-style:italic;font-size:15px;line-height:1.35;color:var(--ink);border-top:1px dashed var(--line);padding-top:10px}
+.hero .dn.pre,.hero .dn.pre~.meta{grid-column:1/-1}
+.hero .dn.pre~.meta .tiny{text-transform:none;letter-spacing:0;font-family:var(--sans,inherit)}
+.num .stp{gap:3px}.num .sb{width:38px}
+.num .sv input{padding:0 18px 0 2px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.num .sx{width:20px;right:0}
+.hero:has(.dn.pre) .stamp{top:-8px}
+.logbook .lgl .pr input{font-size:14.5px;text-overflow:ellipsis}
+
 </style>
 </head>
 <body>
 <div class="bg" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b4"></i></div>
+<div class="sbg" aria-hidden="true"><div class="sl s-dawn"><b></b></div><div class="sl s-topo"><b></b></div><div class="sl s-vig"><b></b></div><div class="sl s-map"><b></b></div><div class="sl s-steel"><b></b></div></div>
 <div class="grain" aria-hidden="true"></div>
 
 <header class="top glass">
@@ -750,7 +869,6 @@ body.subopen .totop{visibility:hidden}
   <div class="hero" id="heroBox"></div>
   <div class="glass quote" id="quoteCard"></div>
   <nav class="qagrid" id="qaGrid" aria-label="Acceso rápido a las áreas de hoy"></nav>
-  <button class="whyline" id="whyLine" type="button"></button>
   <div id="alertBox"></div>
   <div class="glass datebar" style="margin:12px 0">
     <button class="ibtn" id="prevD" aria-label="Día anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -772,6 +890,7 @@ body.subopen .totop{visibility:hidden}
   </div>
   <div class="glass missions" id="missions"></div>
   <div class="glass mission" id="missionCard"></div>
+  <div class="glass avoidcard" id="avoidCard"></div>
   <div class="glass mmode">
     <div class="l"><b>Modo día difícil</b><span>Muestra la versión mínima de cada hábito. Cuenta 50 % y salva la racha mental.</span></div>
     <button class="sw" id="minSw" aria-label="Modo día difícil"></button>
@@ -937,9 +1056,10 @@ body.subopen .totop{visibility:hidden}
     <h2>Mi porqué</h2>
     <textarea id="whyIn"></textarea>
     <div class="f2">
-      <label class="f" for="startDate">Inicio · Día 1</label><label class="f" for="goal">Meta diaria · pts</label>
+      <label class="f" for="startDate">Inicio oficial · Día 1</label><label class="f" for="goal">Meta diaria · pts</label>
       <input type="date" id="startDate" class="fi"><input type="number" id="goal" class="fi" min="10" max="100" inputmode="numeric">
     </div>
+    <p class="tiny" id="startInfo" style="margin:8px 0 0"></p>
     <div class="row" style="margin-top:12px"><button class="btn sm" id="replayIntro">Ver la introducción otra vez</button></div>
   </div>
   <div class="glass card">
@@ -989,6 +1109,7 @@ body.subopen .totop{visibility:hidden}
   <div class="subbar"><button class="back" id="habBack" type="button">‹ Ajustes</button><b>Hábitos</b><span class="r" id="habCount"></span></div>
   <div class="subbody">
     <div class="glass card">
+      <div class="p2box" id="p2Box"></div>
       <p class="tiny" style="margin-top:0">Peso = importancia (★1–3). Desactivar no borra el historial. Los días pasados conservan sus hábitos.</p>
       <div id="hList"></div>
       <div class="row" style="margin-top:12px"><button class="btn pri" id="addHab">+ Agregar hábito</button><button class="btn" id="phase2">Activar Fase 2</button></div>
@@ -1136,22 +1257,23 @@ var MILESTONES=[
  [1,"Kit base: báscula de cocina, bloqueador SPF 50, creatina y corte de pelo",["dieta","skincare","musculo","aseo"]]
 ].map(function(a,i){return {id:"m"+(i+1),m:a[0],name:a[1],s:a[2]};});
 var NUMS=[
- {k:"peso",n:"Peso (kg)",step:"0.1",s:["grasa"]},
- {k:"sueno",n:"Sueño (h)",step:"0.25",s:["madrugar","energia"]},
+ /* pt20: paso de los botones −/+, límites, valor ideal (placeholder gris, no se guarda) y si se arrastra del último registro */
+ {k:"peso",n:"Peso (kg)",step:.1,min:35,max:250,dec:1,keep:1,s:["grasa"]},
+ {k:"sueno",n:"Sueño (h)",step:.5,min:0,max:16,dec:2,ideal:8,s:["madrugar","energia"]},
  {k:"despertar",n:"Hora de despertar",type:"time",s:["madrugar","rutina"]},
- {k:"agua",n:"Agua (L)",step:"0.25",s:["dieta","retencion"]},
- {k:"proteina",n:"Proteína (g)",step:"1",s:["dieta","musculo"]},
- {k:"kcal",n:"Calorías",step:"10",s:["dieta","grasa"]},
- {k:"pasos",n:"Pasos",step:"100",s:["salud","grasa"]},
- {k:"profundo",n:"Trabajo profundo (min)",step:"5",s:["riqueza","rutina"]},
- {k:"ingreso",n:"Ingreso (MXN)",step:"1",s:["riqueza","estatus"]},
- {k:"gasto",n:"Gasto (MXN)",step:"1",s:["inversion"]},
- {k:"paginas",n:"Páginas leídas",step:"1",s:["lectura"]},
- {k:"ingles",n:"Inglés (min)",step:"5",s:["intel","voz"]},
- {k:"redes",n:"Redes sociales (min)",step:"5",s:["celular"]},
- {k:"energia",n:"Energía (1–10)",step:"1",s:["energia"]},
- {k:"animo",n:"Ánimo (1–10)",step:"1",s:["confianza"]},
- {k:"impulso",n:"Impulsos resistidos",step:"1",s:["nofap","malos"]}
+ {k:"agua",n:"Agua (L)",step:.25,min:0,max:8,dec:2,ideal:2.5,s:["dieta","retencion"]},
+ {k:"proteina",n:"Proteína (g)",step:10,min:0,max:400,dec:0,ideal:140,s:["dieta","musculo"]},
+ {k:"kcal",n:"Calorías",step:100,min:0,max:6000,dec:0,ideal:"kcal",s:["dieta","grasa"]},
+ {k:"pasos",n:"Pasos",step:500,min:0,max:60000,dec:0,ideal:8000,s:["salud","grasa"]},
+ {k:"profundo",n:"Trabajo profundo (min)",step:15,min:0,max:900,dec:0,ideal:180,s:["riqueza","rutina"]},
+ {k:"ingreso",n:"Ingreso",type:"money",s:["riqueza","estatus"]},
+ {k:"gasto",n:"Gasto",type:"money",s:["inversion"]},
+ {k:"paginas",n:"Páginas leídas",step:5,min:0,max:500,dec:0,ideal:20,s:["lectura"]},
+ {k:"ingles",n:"Inglés (min)",step:15,min:0,max:600,dec:0,ideal:30,s:["intel","voz"]},
+ {k:"redes",n:"Redes sociales (min)",step:15,min:0,max:1440,dec:0,ideal:30,s:["celular"]},
+ {k:"energia",n:"Energía (1–10)",step:1,min:1,max:10,dec:0,ideal:7,s:["energia"]},
+ {k:"animo",n:"Ánimo (1–10)",step:1,min:1,max:10,dec:0,ideal:7,s:["confianza"]},
+ {k:"impulso",n:"Impulsos resistidos",step:1,min:0,max:50,dec:0,ideal:0,s:["nofap","malos"]}
 ];
 var DEFAULT_WHY="Ser millonario, formar una familia y vivir en el extranjero. Cada check de hoy es un ladrillo de esa vida. Brillante y constante, no brillante y holgazán.";
 
@@ -1327,6 +1449,7 @@ var SND={
  fail:[1.2,function(K,t){K.drive(2.4);K.drum(t,66,.85,{d:.5,skin:450,wet:.25});K.osc({t:t+.02,f:98,glide:86,gt:.45,type:"sawtooth",d:.6,g:.22,lp:520,wet:.3,pan:-.1});K.osc({t:t+.02,f:104,glide:90,gt:.45,type:"sawtooth",d:.6,g:.2,lp:520,wet:.3,pan:.1});K.noise({t:t,d:.15,g:.35,type:"lowpass",f:320,wet:.2});}],
  clear:[.8,function(K,t){K.whoosh(t,.22,.32,3200,650,{pan:.25,pan2:-.25});K.paper(t,.18,.25);K.osc({t:t+.12,f:523,glide:330,gt:.12,type:"triangle",d:.2,g:.16,lp:2200,wet:.25});K.click(t+.2,.2,2500);K.drum(t+.2,120,.2,{d:.12,wet:.1});}],
  half:[1.0,function(K,t){K.drum(t,86,.5,{d:.26,skin:700});K.brass(t+.03,[A3],.38,.5,{bright:1500,a:.02});K.leather(t,.2);}],
+ stp:[.3,function(K,t){K.drive(2);K.click(t,.35,3400);K.osc({t:t,f:K.j(1480),d:.035,g:.08,wet:.04});K.osc({t:t,f:200,glide:150,gt:.03,d:.05,g:.22,wet:.05});}],
  num:[.6,function(K,t){K.drive(2.6);K.osc({t:t,f:K.j(262),type:"triangle",d:.12,g:.14,lp:1500,wet:.3});K.click(t,.5,3200);K.osc({t:t,f:K.j(1900),d:.045,g:.12,wet:.05});K.osc({t:t,f:180,glide:120,gt:.04,d:.07,g:.35,wet:.08});K.bell(t+.06,2349,.22,.05);K.pencil(t+.01,.08,.18);}],
  save:[1.9,function(K,t){K.click(t,.3,2400);K.metal(t,2100,.08,.12,{r:[1,1.6]});K.metal(t+.05,2650,.08,.1,{r:[1,1.6]});K.leather(t+.02,.3);var h=t+.1;K.drum(h,64,.7,{d:.8});K.brass(h,[A3,E3*2],.22,.5,{bright:2400});K.brass(h+.2,[D4,Fs4,A4],.9,.62,{bright:2700});K.metal(h+.2,D5,1.2,.06);K.sub(h,80,45,.5,.4);}],
  restore:[2.0,function(K,t){K.swell(t,.55,.32,293);K.whoosh(t,.55,.18,500,4200);var h=t+.56;K.drive(2);K.drum(h,58,.85,{d:1});K.sub(h,90,38,.9,.75);K.brass(h,[D2,A2,D3],.8,.65,{bright:1600});K.metal(h,440,1.3,.08);}],
@@ -1406,7 +1529,7 @@ function Cs(f){return f*1.2599;} // tercera mayor
 for(var ti=0;ti<5;ti++)(function(i){var dr=[92,82,73,65,110][i],tn=[587.33,698.46,880,523.25,783.99][i],dir=i%2?1:-1;
   SND["tab"+i]=[.9,function(K,t){K.whoosh(t,.2,.3,500+i*120,2600+i*300,{pan:-.35*dir,pan2:.35*dir});K.leather(t+.12,.24);K.drum(t+.13,dr,.42,{d:.3,wet:.2});K.osc({t:t+.13,f:tn,fm:[2.01,.8,.2],d:.45,g:.2,wet:.45});}]
 })(ti);
-var SND_ORDER=["launch","enter","tick","tab0","tab1","tab2","tab3","tab4","check","clear","half","fail","nav","save","toggle","toggleOff","objective","faced","catdone","num","page","oath","victory","perfect","promote","milestone","shield","shieldBreak","warning","tstart","tpause","tdone","weekcheck","review","restore","export","import","error","delete"];
+var SND_ORDER=["launch","enter","tick","tab0","tab1","tab2","tab3","tab4","check","clear","half","fail","nav","save","toggle","toggleOff","objective","faced","catdone","num","stp","page","oath","victory","perfect","promote","milestone","shield","shieldBreak","warning","tstart","tpause","tdone","weekcheck","review","restore","export","import","error","delete"];
 var SND_LAZY=["cheer100","weekWin","monthWin"]; // pesados: 1 variante, se preparan después de la primera pasada
 SND_ORDER.push("insig","insigHi","qdown","qland","qup","cat_cuerpo","cat_nutri","cat_sueno","cat_piel","cat_trabajo","cat_mente","cat_social","cat_espiritu");
 var SND_ALIAS={undo:"clear",whoosh:"nav",chord:"catdone",levelup:"promote",bell:"tdone",impact:"launch",stamp:"page",pop:"toggle"};
@@ -1449,7 +1572,7 @@ function sndRender(name,vi){
 }
 /* calibración: mide la salida real tras la cadena master (vol 90) y corrige la ganancia del buffer
    para que TODOS los efectos salgan al mismo nivel percibido (el compresor no es lineal). */
-var SND_OUT=-11,SND_CORR={},SND_OFF={cat_cuerpo:-4,cat_nutri:-4,cat_sueno:-4,cat_piel:-4,cat_trabajo:-4,cat_mente:-4,cat_social:-4,cat_espiritu:-4,qdown:-9,qland:-11,qup:-9}; // efectos secundarios: un poco más bajos
+var SND_OUT=-11,SND_CORR={},SND_OFF={cat_cuerpo:-4,cat_nutri:-4,cat_sueno:-4,cat_piel:-4,cat_trabajo:-4,cat_mente:-4,cat_social:-4,cat_espiritu:-4,qdown:-9,qland:-11,qup:-9,stp:-13}; // efectos secundarios: un poco más bajos
 function sndScale(b,db){var g=Math.pow(10,db/20);for(var c=0;c<b.numberOfChannels;c++){var d=b.getChannelData(c);for(var i=0;i<d.length;i++)d[i]*=g;}sndLimit(b,SND_CEIL);}
 function sndCalibrate(name,vi,b){
   if(vi&&SND_CORR[name]!=null){sndScale(b,SND_CORR[name]);return Promise.resolve(null);}
@@ -1509,6 +1632,7 @@ var Sfx={ctx:null,master:null,bufs:{},stats:{},queue:[],busy:false,pending:null,
       var live=this.act.filter(function(v){return !v.x;});if(live.length>=this.MAXV){live[0].x=1;this.stopV(live[0]);}
       var rate=name==="lseq"?1:1+(Math.random()*2-1)*.018; // la secuencia de arranque va exacta (sincronía con la animación)
       if(name==="check"&&arg!=null){var sc=[-5,-3,0,2,4,7,9,12];rate*=Math.pow(2,sc[clamp(Math.round(arg*(sc.length-1)),0,sc.length-1)]/12);}
+      if(name==="stp"&&arg!=null)rate*=Math.pow(2,arg/12); // −/+ de registros: más grave al bajar, más agudo al subir
       if((name==="qdown"||name==="qland")&&arg!=null)rate*=Math.pow(2,((arg-3.5)*.55)/12); // cada área suena un poco distinta
       if((name==="insig"||name==="insigHi")&&arg!=null)rate*=Math.pow(2,(arg*.6+(Math.random()*2-1)*.35)/12); // sube un poco con el rango + variación
       src.playbackRate.value=rate;
@@ -1537,8 +1661,11 @@ function sfx(n,a){Sfx.play(n,a);}
 
 /* =================== ESTADO =================== */
 var S;
+/* pt20: inicio oficial de la campaña. Si se usa por primera vez después, el Día 1 es el día del primer uso. */
+var OFFICIAL_START="2026-11-01";
+function defaultStart(){var t=todayIso();return t<OFFICIAL_START?OFFICIAL_START:t;}
 function defaultState(){
-  return {app:"lifemaxxing",version:2,start:todayIso(),goal:80,why:DEFAULT_WHY,
+  return {app:"lifemaxxing",version:2,start:defaultStart(),goal:80,why:DEFAULT_WHY,
     habits:DEF_HABITS.map(function(h,i){return {id:h.id,cat:h.cat,name:h.name,w:h.w,phase:h.phase,min:h.min,ifthen:h.ifthen,s:h.s.slice(),active:h.phase===1,order:i};}),
     days:{},reviews:{},ms:{},focus:{},
     settings:{sound:true,vol:90,autosave:true,lite:false,slots:7},
@@ -1548,10 +1675,14 @@ function normalize(o){
   var d=defaultState();
   o.days=o.days||{};o.reviews=o.reviews||{};o.ms=o.ms||{};o.focus=o.focus||{};
   o.settings=Object.assign(d.settings,o.settings||{});o.meta=Object.assign(d.meta,o.meta||{});
-  o.why=o.why||DEFAULT_WHY;o.goal=o.goal||80;o.start=o.start||todayIso();
+  o.why=o.why||DEFAULT_WHY;o.goal=o.goal||80;o.start=o.start||defaultStart();
   (o.habits||[]).forEach(function(h){if(!h.s)h.s=[];if(h.min==null)h.min="";if(h.ifthen==null)h.ifthen="";});
   if(!o.meta.snd2){o.settings.vol=Math.max(+o.settings.vol||0,90);o.meta.snd2=1;} // nuevo motor de sonido: volumen alto por defecto
   if(!o.meta.qseed)o.meta.qseed=(Math.random()*4294967295>>>0)||7; // semilla del orden de las 365 frases (por instalación)
+  // pt20: valores imposibles de registros (p. ej. Peso 0.1 por la flecha del campo numérico) → se borran
+  if(!o.meta.n20){var fixed=0;Object.keys(o.days).forEach(function(k){var x=o.days[k];if(!x||!x.n)return;NUMS.forEach(function(f){var v=x.n[f.k];if(f.min==null||v==null||v==="")return;v=+v;if(isNaN(v)||v<f.min||v>f.max){delete x.n[f.k];fixed++;}});});o.meta.n20=1;o.meta.n20fix=fixed;}
+  // pt20: partidas de prueba que empezaron antes del 1 nov 2026 → Día 1 = 1 nov; los registros previos quedan como pre-campaña
+  if(!o.meta.st20){if(o.start<OFFICIAL_START){o.meta.preFrom=o.start;o.start=OFFICIAL_START;}o.meta.st20=1;}
   o.app="lifemaxxing";o.version=2;return o;
 }
 function load(){
@@ -1633,7 +1764,7 @@ function phaseName(n){return n<=90?"Fundación":(n<=180?"Aceleración":"Interés
 var streakCache=null;
 function streakInfo(){
   if(streakCache)return streakCache;
-  var t=todayIso(),keys=Object.keys(S.days).filter(function(k){return scoreOf(k)!=null;}).sort();
+  var t=todayIso(),keys=Object.keys(S.days).filter(function(k){return k>=S.start&&scoreOf(k)!=null;}).sort(); // pt20: la racha cuenta desde el Día 1
   var r={cur:0,best:0,shields:0,shielded:{},missY:false,miss2:false};
   if(keys.length){
     var d=keys[0],run=0;
@@ -1654,15 +1785,17 @@ function streakInfo(){
   streakCache=r;return r;
 }
 function xpInfo(){
-  var xp=0;
-  Object.keys(S.days).forEach(function(k){var s=scoreOf(k),x=S.days[k];if(s!=null)xp+=s;var m=x.m||{};if(m.pd){var od=0;for(var oi2=0;oi2<3;oi2++)if(m.pd[oi2]&&(m.p&&m.p[oi2])){xp+=[30,20,20][oi2];od++;}if(od===3)xp+=15;}if(m.avd)xp+=30;});
-  Object.keys(S.focus).forEach(function(k){(S.focus[k]||[]).forEach(function(f){xp+=Math.round(f.min/3);});});
+  var xp=0,hon=0;
+  /* pt20: lo hecho antes del Día 1 son "puntos honorarios": cuentan al 50 % para el rango y no tocan stats, racha ni días */
+  Object.keys(S.days).forEach(function(k){var s=scoreOf(k),x=S.days[k],dx=0;if(s!=null)dx+=s;var m=x.m||{};if(m.pd){var od=0;for(var oi2=0;oi2<3;oi2++)if(m.pd[oi2]&&(m.p&&m.p[oi2])){dx+=[30,20,20][oi2];od++;}if(od===3)dx+=15;}if(m.avd)dx+=30;
+    if(k<S.start){dx=Math.round(dx*.5);hon+=dx;}xp+=dx;});
+  Object.keys(S.focus).forEach(function(k){(S.focus[k]||[]).forEach(function(f){var dx=Math.round(f.min/3);if(k<S.start){dx=Math.round(dx*.5);hon+=dx;}xp+=dx;});});
   Object.keys(S.ms).forEach(function(k){if(S.ms[k])xp+=150;});
   Object.keys(S.reviews).forEach(function(k){var r=S.reviews[k];if(r&&r.c)xp+=Object.keys(r.c).filter(function(i){return r.c[i];}).length*10;if(r&&(r.lesson||r.next))xp+=40;});
   // para pasar del nivel n al n+1 se necesitan 200·n·(n+1) XP acumulados
   var lvl=1;while(xp>=200*lvl*(lvl+1))lvl++;
   var base=200*(lvl-1)*lvl,next=200*lvl*(lvl+1);
-  return {xp:xp,lvl:lvl,into:xp-base,need:next-base};
+  return {xp:xp,lvl:lvl,into:xp-base,need:next-base,hon:hon};
 }
 function lastN(n,from){var a=[],d=from||todayIso();for(var i=0;i<n;i++){a.push(d);d=addDays(d,-1);}return a.reverse();}
 function weekStart(s){var d=parse(s),dow=(d.getDay()+6)%7;d.setDate(d.getDate()-dow);return iso(d);}
@@ -1788,10 +1921,11 @@ function initSeg(seg,cb){
 function renderHeader(){
   var n=dayNum(),lv=xpInfo();
   $("insig").innerHTML=insignia(lv.lvl);
-  $("dayCount").textContent=rankName(lv.lvl).toUpperCase()+" · "+(n>=1?("DÍA "+pad3(n)+"/365"):("INICIA "+S.start));
+  $("dayCount").textContent=rankName(lv.lvl).toUpperCase()+" · "+(n>=1?("DÍA "+pad3(n)+"/365"):("PRE · T−"+pad(1-n)));
   $("lvlTxt").textContent="NV "+lv.lvl+" · "+lv.into.toLocaleString("es-MX")+"/"+lv.need.toLocaleString("es-MX");$("xpFill").style.width=(lv.into/lv.need*100).toFixed(1)+"%";
   if(lv.lvl>(S.meta.lvlSeen||1)){S.meta.lvlSeen=lv.lvl;persist();celebrate("ASCENSO · NIVEL "+lv.lvl,rankName(lv.lvl),lv.xp.toLocaleString("es-MX")+" XP en servicio",insignia(lv.lvl),"promote");}
   updateSaveUI();
+  p2Check();
 }
 
 /* =================== HOY =================== */
@@ -1803,25 +1937,35 @@ var CHEV='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="cu
 
 function renderWhy(){
   var st=streakInfo();
-  $("whyCard").innerHTML='<div class="k">Expediente · Por qué peleo</div><div class="w">“'+esc(S.why)+'”</div><div class="tiny" style="margin-top:10px">Edítalo en Ajustes → Mi porqué.</div>';
-  $("whyLine").innerHTML='<span class="k">Por qué peleo</span><span class="w">“'+esc(S.why)+'”</span><span class="go">›</span>';
+  $("whyCard").innerHTML='<div class="k">Expediente · Por qué peleo</div><div class="w">“'+esc(S.why)+'”</div>';
   var html="";
   if(cur===todayIso()){
     if(st.miss2&&warnDay!==todayIso()&&Sfx.ok()&&!launching){warnDay=todayIso();setTimeout(function(){sfx("warning");},500);}
     if(st.miss2)html='<div class="glass alert"><div class="ic">!!</div><div><b>Dos días seguidos abajo. Reinicio limpio HOY.</b><span>Activa “Modo día difícil”, haz la versión mínima de todo y cierra el día arriba de 50. El patrón viejo se rompe aquí.</span></div></div>';
     else if(st.missY)html='<div class="glass alert"><div class="ic">!</div><div><b>Ayer no contó. Regla: nunca falles dos veces.</b><span>Hoy no tiene que ser perfecto: tiene que ser arriba de 50. Empieza por el hábito más fácil ahora mismo.</span></div></div>';
     var h=new Date().getHours(),x=S.days[cur],m=(x&&x.m)||{};
-    if(!html&&h<11&&!(m.p&&m.p[0]))html='<div class="glass alert soft"><div class="ic">1</div><div><b>El coach ya armó tu orden del día.</b><span>Revisa los 3 objetivos de abajo y acéptalos con un toque. Edita solo si tu realidad cambió.</span></div></div>';
+    if(!html&&h<11&&!(m.p&&m.p[0]))html='<div class="glass alert soft"><div class="ic">1</div><div><b>El coach ya armó tu orden del día.</b><span>Abre el Briefing de abajo y acepta los 3 objetivos con un toque. Quita o refresca la que no aplique.</span></div></div>';
   }
   $("alertBox").innerHTML=html;
 }
 function renderHero(){
   var n=Math.floor((parse(cur)-parse(S.start))/864e5)+1,isT=cur===todayIso(),s=scoreOf(cur),wk=Math.floor((Math.max(n,1)-1)/7);
   var st=s!=null&&s>=S.goal?"Cumplido":(!isT&&cur<todayIso()?(s==null?"Sin reporte":(s<50?"Día perdido":"Registrado")):"En curso");
+  if(n<1){renderPreHero();return;}
   var r="";for(var i=0;i<52;i++)r+='<i class="'+(n<1?"":(i<wk?"on":(i===wk?"now":"")))+'"></i>';
   $("heroBox").innerHTML='<div class="dl">Reporte de campaña</div><div class="dn">'+(n>=1?pad3(n):"000")+'<small>/ 365</small></div>'+
     '<div class="meta">'+(n>=1?('Mes <b>'+clamp(Math.ceil(n/30.4),1,12)+'</b> · Semana <b>'+(wk+1)+'</b><br>Fase <b>'+phaseName(n)+'</b><br>Faltan <b>'+Math.max(0,365-n)+'</b> días'):('Inicia el <b>'+esc(S.start)+'</b>'))+'</div>'+
     '<span class="stamp" style="color:'+(st==="Cumplido"?"#b4c477":(st==="En curso"?"#d0a650":"#d26a59"))+'">'+st+'</span><div class="ruler">'+r+'</div>';
+}
+/* pt20: pre-campaña: cuenta regresiva al Día 1 (se actualiza cada 30 s solo mientras se ve) */
+var preIv=null;
+function preTxt(){var ms=parse(S.start)-Date.now(),d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);return {d:Math.max(0,d),h:Math.max(0,h),m:Math.max(0,m)};}
+function renderPreHero(){
+  var p=preTxt(),lv=xpInfo(),sd=parse(S.start);
+  $("heroBox").innerHTML='<div class="dl">Cuenta regresiva al Día 1</div><div class="dn pre"><span id="preD">'+pad(p.d)+'</span><small>d</small> <span id="preH">'+pad(p.h)+'</span><small>h</small> <span id="preM">'+pad(p.m)+'</span><small>m</small></div>'+
+    '<div class="meta">Día 1 · <b>'+esc(DIA[sd.getDay()]+" "+sd.getDate()+" de "+MES[sd.getMonth()])+'</b><br>Puntos honorarios: <b>'+lv.hon.toLocaleString("es-MX")+' XP</b><br><span class="tiny">Cuentan al 50 % para tu rango. No mueven días, racha ni stats.</span></div>'+
+    '<span class="stamp" style="color:#d0a650">Pre-campaña</span><div class="prehype">'+esc(hypeLine(dnOf(cur)+3))+'</div>';
+  clearInterval(preIv);preIv=setInterval(function(){if(document.hidden||view!=="hoy")return;var e=$("preD");if(!e||dayNum()>=1){clearInterval(preIv);preIv=null;if(dayNum()>=1){renderAll();}return;}var q=preTxt();e.textContent=pad(q.d);$("preH").textContent=pad(q.h);$("preM").textContent=pad(q.m);},30000);
 }
 function renderToday(){
   var d=parse(cur),isT=cur===todayIso();
@@ -1834,7 +1978,7 @@ function renderToday(){
   var hs=dayHabits(cur),html="";
   CATS.forEach(function(c){
     var list=hs.filter(function(h){return h.cat===c.id;});if(!list.length)return;
-    html+='<div class="glass cat" data-cat="'+c.id+'" style="--c:'+c.c+'"><div class="ch"><span class="dotc"></span><span>'+esc(c.n)+'</span><span class="cnt"></span></div><div class="cbar"><i></i></div>';
+    html+='<div class="glass cat" data-cat="'+c.id+'" style="--c:'+c.c+'"><div class="ch"><span class="csym"><svg viewBox="0 0 24 24" aria-hidden="true">'+QA_ICO[c.id]+'</svg></span><span>'+esc(c.n)+'</span><span class="cnt"></span></div><div class="cbar"><i></i></div>';
     list.forEach(function(h){
       html+='<div class="hab" data-id="'+h.id+'"><div class="main"><div class="box"><span class="hf"></span>'+CHECK_SVG+X_SVG+'</div><div class="nm">'+esc(h.name)+'<small></small></div><div class="w" title="Peso '+h.w+'">'+"<i></i>".repeat(h.w)+'</div><button class="more" aria-label="Detalles">'+CHEV+'</button></div>'+
         '<div class="det"><div><div class="in">'+(h.min?'<p><b>Versión mínima:</b> '+esc(h.min)+'</p>':"")+(h.ifthen?'<p><b>Plan si-entonces:</b> '+esc(h.ifthen)+'</p>':"")+
@@ -1846,8 +1990,7 @@ function renderToday(){
   renderQA();
   qa(".hab",$("cats")).forEach(function(el){paintHabit(el,false);});
   CATS.forEach(function(c){paintCat(c.id,false);});
-  var nh="";NUMS.forEach(function(f){var v=x.n&&x.n[f.k]!=null?x.n[f.k]:"";nh+='<div class="num"><label>'+esc(f.n)+'</label><input type="'+(f.type||"number")+'" '+(f.type?"":'inputmode="decimal" step="'+f.step+'"')+' data-n="'+f.k+'" value="'+esc(v)+'"></div>';});
-  $("nums").innerHTML=nh;
+  renderNums(x);
   $("dNote").value=x.note||"";
   updateScore(false);
 }
@@ -1916,11 +2059,87 @@ $("cats").addEventListener("click",function(e){
   }
 });
 $("minSw").onclick=function(){var x=getDay(cur,true);x.mm=!x.mm;x.u=Date.now();changed();this.classList.toggle("on",x.mm);qa(".hab",$("cats")).forEach(function(el){paintHabit(el,false);});sfx(x.mm?"toggle":"toggleOff");haptic();toast(x.mm?"Modo día difícil: cada toque marca la versión mínima (50 %)":"Modo normal");};
-$("nums").addEventListener("change",function(e){if(e.target.getAttribute("data-n"))sfx("num");});
+/* --- pt20: registros numéricos con botones −/+ (mantener = acelera), borrar, ideal gris y arrastre del último valor --- */
+var FX_USD=18.5,noCarry={};
+function numDef(k){for(var i=0;i<NUMS.length;i++)if(NUMS[i].k===k)return NUMS[i];return null;}
+function idealOf(f,d){if(f.ideal==="kcal")return monthOfIso(d||cur)>=5?2550:2050;return f.ideal;}
+function fmtNum(f,v){if(v==null||v===""||isNaN(v))return "";var r=+(+v).toFixed(f.dec||0);return String(r);}
+function carryOf(f,d){if(!f.keep)return null;var ks=Object.keys(S.days).filter(function(k){return k<d;}).sort();for(var i=ks.length-1;i>=0;i--){var x=S.days[ks[i]];if(x&&x.n&&typeof x.n[f.k]==="number")return {v:x.n[f.k],d:ks[i]};}return null;}
+function moneyMXN(x,k){if(!x||!x.n||x.n[k]==null||isNaN(x.n[k]))return 0;return x.n[k+"Cur"]==="USD"?x.n[k]*FX_USD:+x.n[k];}
+function moneySplit(days,k){var o={mxn:0,usd:0};days.forEach(function(d){var x=S.days[d];if(x&&x.n&&+x.n[k]){if(x.n[k+"Cur"]==="USD")o.usd+=+x.n[k];else o.mxn+=+x.n[k];}});return o;}
+function moneyTxt(o){return "$"+Math.round(o.mxn).toLocaleString("es-MX")+(o.usd?" + US$"+(Math.round(o.usd*100)/100).toLocaleString("es-MX"):"");}
+var MINUS='<svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg>',PLUS='<svg viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"/></svg>',XS='<svg viewBox="0 0 24 24"><path d="M8 8l8 8M16 8l-8 8"/></svg>';
+function renderNums(x){
+  x=x||S.days[cur]||{n:{}};var nh="";
+  NUMS.forEach(function(f){
+    var v=x.n&&x.n[f.k]!=null?x.n[f.k]:"";
+    if(f.type==="time"){nh+='<div class="num"><label>'+esc(f.n)+'</label><input type="time" data-n="'+f.k+'" value="'+esc(v)+'"></div>';return;}
+    if(f.type==="money"){var c=x.n&&x.n[f.k+"Cur"]==="USD"?"USD":"MXN";
+      nh+='<div class="num money'+(v!==""?" has":"")+'" data-k="'+f.k+'"><label>'+esc(f.n)+'</label><div class="stp"><div class="sv"><input type="text" inputmode="decimal" autocomplete="off" data-n="'+f.k+'" value="'+esc(v)+'" placeholder="0"><button type="button" class="sx" data-clr="'+f.k+'" aria-label="Borrar '+esc(f.n)+'">'+XS+'</button></div><button type="button" class="curb" data-cur="'+f.k+'" aria-label="Moneda">'+c+'</button></div></div>';return;}
+    var car=null,ph="";
+    if(v===""&&!noCarry[cur+f.k])car=carryOf(f,cur);
+    var id=idealOf(f,cur);ph=id!=null?fmtNum(f,id):(f.keep?"—":"");
+    var shown=v!==""?fmtNum(f,v):(car?fmtNum(f,car.v):"");
+    nh+='<div class="num'+(v!==""?" has":"")+(car?" carried":"")+'" data-k="'+f.k+'"><label>'+esc(f.n)+(car?'<em class="cy" title="Arrastrado del '+car.d+'">↺ '+esc(shortD(car.d))+'</em>':(id!=null&&v===""?'<em class="idl">ideal</em>':""))+'</label>'+
+      '<div class="stp"><button type="button" class="sb" data-d="-1" aria-label="Menos '+esc(f.n)+'">'+MINUS+'</button><div class="sv"><input type="text" inputmode="'+(f.dec?"decimal":"numeric")+'" autocomplete="off" data-n="'+f.k+'" value="'+esc(shown)+'" placeholder="'+esc(ph)+'"><button type="button" class="sx" data-clr="'+f.k+'" aria-label="Borrar '+esc(f.n)+'">'+XS+'</button></div><button type="button" class="sb" data-d="1" aria-label="Más '+esc(f.n)+'">'+PLUS+'</button></div></div>';
+  });
+  $("nums").innerHTML=nh;
+}
+function numSet(k,v,final){
+  var x=getDay(cur,true),f=numDef(k),box=document.querySelector('#nums .num[data-k="'+k+'"]'),inp=box&&box.querySelector("input");
+  if(v==null){delete x.n[k];}else{x.n[k]=v;}
+  if(box){box.classList.toggle("has",v!=null);if(v!=null&&box.classList.contains("carried")){box.classList.remove("carried");var cy=box.querySelector(".cy");if(cy)cy.remove();}
+    if(v!=null){var il=box.querySelector(".idl");if(il)il.remove();}}
+  if(inp&&final!=="typing")inp.value=v==null?"":fmtNum(f,v);
+  x.u=Date.now();invalidate();if(final)changed();
+}
+var hold=null;
+function stepOnce(k,dir,mult){
+  var f=numDef(k),x=S.days[cur],v=x&&x.n&&typeof x.n[k]==="number"?x.n[k]:null,nv;
+  if(v==null){var car=noCarry[cur+k]?null:carryOf(f,cur),id=idealOf(f,cur);
+    if(car)nv=car.v+dir*f.step;            // valor arrastrado: el primer toque ya ajusta desde ahí
+    else if(id!=null)nv=id;                // primer toque: pone el ideal; los siguientes ajustan
+    else nv=k==="peso"?67.5:f.min;}
+  else nv=v+dir*f.step*(mult||1);
+  nv=clamp(Math.round(nv/f.step)*f.step,f.min,f.max);nv=+nv.toFixed(f.dec||0);
+  var edge=v!=null&&nv===v;
+  numSet(k,nv,false);return !edge;
+}
+function holdStop(){if(!hold)return;clearTimeout(hold.t);var k=hold.k;hold=null;changed();}
+$("nums").addEventListener("pointerdown",function(e){
+  var b=e.target.closest(".sb");if(!b)return;e.preventDefault();
+  var k=b.closest(".num").getAttribute("data-k"),dir=+b.getAttribute("data-d");holdStop();
+  var moved=stepOnce(k,dir,1);sfx("stp",moved?(dir>0?2:-2):-6);haptic();
+  b.classList.remove("hit");void b.offsetWidth;b.classList.add("hit");
+  hold={k:k,n:0,last:performance.now()};
+  (function rep(delay){hold.t=setTimeout(function(){if(!hold)return;hold.n++;var mult=hold.n>24?10:(hold.n>12?5:1),ok=stepOnce(k,dir,mult);
+    var now=performance.now();if(ok&&now-hold.last>85){sfx("stp",dir>0?2+Math.min(4,hold.n/8):-2-Math.min(4,hold.n/8));hold.last=now;}if(ok&&hold.n%3===0)haptic();
+    if(!ok){holdStop();return;}rep(Math.max(45,delay*.86));},delay);})(380);
+});
+["pointerup","pointercancel","pointerleave"].forEach(function(ev){$("nums").addEventListener(ev,function(e){if(hold&&(ev!=="pointerleave"||e.target.closest(".sb")))holdStop();});});
+window.addEventListener("blur",holdStop);
+$("nums").addEventListener("contextmenu",function(e){if(e.target.closest(".sb"))e.preventDefault();});
+$("nums").addEventListener("click",function(e){
+  var c=e.target.closest("[data-clr]");
+  if(c){var k=c.getAttribute("data-clr"),box=c.closest(".num");noCarry[cur+k]=1;numSet(k,null,true);var x=S.days[cur];if(x&&x.n)delete x.n[k+"Cur"];
+    if(box.classList.contains("carried")){box.classList.remove("carried");var cy=box.querySelector(".cy");if(cy)cy.remove();box.querySelector("input").value="";}
+    var cb=box.querySelector(".curb");if(cb)cb.textContent="MXN";sfx("clear",.6);haptic();return;}
+  var cu=e.target.closest("[data-cur]");
+  if(cu){var k2=cu.getAttribute("data-cur"),x2=getDay(cur,true),usd=x2.n[k2+"Cur"]!=="USD";if(usd)x2.n[k2+"Cur"]="USD";else delete x2.n[k2+"Cur"];cu.textContent=usd?"USD":"MXN";x2.u=Date.now();invalidate();changed();sfx("toggle",.6);haptic();}
+});
+$("nums").addEventListener("change",function(e){
+  var k=e.target.getAttribute("data-n");if(!k)return;var f=numDef(k);
+  if(f&&!f.type&&e.target.value!==""){var x=S.days[cur];var v=x&&x.n?x.n[k]:null;if(typeof v==="number"){var cv=+clamp(v,f.min,f.max).toFixed(f.dec||0);numSet(k,cv,true);}}
+  else if(f&&f.type==="money"&&e.target.value!==""){var x3=S.days[cur];if(x3&&x3.n&&typeof x3.n[k]==="number")e.target.value=String(x3.n[k]);}
+  sfx("num");
+});
 $("nums").addEventListener("input",function(e){
-  var k=e.target.getAttribute("data-n");if(!k)return;var x=getDay(cur,true),v=e.target.value;
-  if(v==="")delete x.n[k];else x.n[k]=e.target.type==="time"?v:parseFloat(v);
-  x.u=Date.now();invalidate();changed();
+  var k=e.target.getAttribute("data-n");if(!k)return;var x=getDay(cur,true),v=e.target.value,f=numDef(k);
+  if(f&&f.type==="time"){if(v==="")delete x.n[k];else x.n[k]=v;x.u=Date.now();invalidate();changed();return;}
+  var t=String(v).replace(",",".").replace(/[^0-9.\-]/g,"");
+  if(t===""||t==="."||t==="-"){noCarry[cur+k]=1;numSet(k,null,"typing");return;}
+  var n=parseFloat(t);if(isNaN(n))return;if(f.type==="money")n=Math.max(0,Math.round(n*100)/100);
+  numSet(k,n,"typing");
 });
 $("dNote").addEventListener("input",function(e){var x=getDay(cur,true);x.note=e.target.value;x.u=Date.now();changed();});
 $("numsH").onclick=function(){this.classList.toggle("open");$("numsC").classList.toggle("open");sfx("tick");};
@@ -1929,29 +2148,46 @@ $("nextD").onclick=function(){if(cur<todayIso()){cur=addDays(cur,1);lastScoreSho
 
 /* --- misión del día --- */
 var OBJXP=[30,20,20],OBJBONUS=15,OTAG=["#1 Ingreso","#2 Cuerpo","#3 Campaña"];
+var briefOpen=false;
 function renderMission(){
-  var x=S.days[cur]||{},m=x.m||{p:["","",""],pd:[false,false,false],av:"",avd:false},cp=coachPlan(cur),empty=!(m.p&&(m.p[0]||m.p[1]||m.p[2])),t=todayIso(),past=cur<t,fut=cur>t,mx=m.x||[],mf=m.f||[];
-  var due=past?"Vencida · "+shortD(cur):(fut?"Programada · "+shortD(cur):"Hoy · vence a las 23:59");
-  var h='<div class="mk">Briefing · Orden del coach</div><div class="mh">Tres tareas. Solo para hoy.</div><div class="due'+(past?" past":"")+'">'+due+'</div><div class="tiny" style="margin:6px 0 8px">Cada una cabe en este día. La etiqueta dice qué misión de la semana o del mes alimenta; esas misiones tienen su propio plazo en Misiones activas y Campaña.</div>';
-  if(empty&&!past)h+='<div class="corder">'+cp.p.map(function(q,i){return '<div class="co"><span class="tg">'+cp.tag[i]+'</span><b>'+esc(q)+'</b><small>↳ '+esc(cp.feed[i])+' · +'+OBJXP[i]+' XP</small></div>';}).join("")+'<div class="row"><button class="btn sm pri" id="coachOk">Aceptar orden</button><span class="tiny">¿Tu día cambió? Escribe encima o cambia una por tarea externa.</span></div></div>';
-  for(var i=0;i<3;i++){var dn=m.pd&&m.pd[i],ext=!!mx[i],val=m.p?m.p[i]:"",fd=ext?"Tarea externa · hoy":(val&&val!==cp.p[i]&&!mf[i]?"Tarea propia · hoy":(mf[i]||cp.feed[i]));
-    h+='<div class="pr'+(dn?" done":"")+'"><span class="n">'+(i+1)+'</span><input data-p="'+i+'" value="'+esc(val)+'" placeholder="'+esc(ext?"Tarea externa para hoy (trámite, entrega, encargo…)":cp.p[i])+'"><button class="cbx'+(dn?" on":"")+'" data-pd="'+i+'" aria-label="Completada">'+CIRC_SVG+'</button></div>'+
-     '<div class="pmeta'+(dn?" done":"")+'"><span class="tg">'+OTAG[i]+'</span><span class="fd">↳ '+esc(fd)+'</span><span class="xp">+'+OBJXP[i]+' XP</span>'+(past?'':'<button class="lnk" data-x="'+i+'">'+(ext?"Volver a la del coach":"Cambiar por externa")+'</button>')+'</div>';}
-  var nd=(m.pd||[]).filter(Boolean).length;
+  var x=S.days[cur]||{},m=x.m||{p:["","",""],pd:[false,false,false],av:"",avd:false},cp=coachPlan(cur),empty=!(m.p&&(m.p[0]||m.p[1]||m.p[2])),t=todayIso(),past=cur<t,fut=cur>t,mx=m.x||[],mf=m.f||[],rm=m.rm||[0,0,0];
+  var due=past?"Vencida · "+shortD(cur):(fut?"Programada · "+shortD(cur):"Hoy · vence 23:59"),nd=(m.pd||[]).filter(Boolean).length,pre=empty&&!past;
+  var h='<button type="button" class="bhd" id="briefHd" aria-expanded="'+briefOpen+'"><span class="bl"><span class="mk">Briefing · Orden del coach</span><span class="mh">Tres tareas. Solo para hoy.</span><span class="due'+(past?" past":"")+'">'+due+'</span></span>'+
+    '<span class="bprog'+(nd===3?" ok":"")+'"><b>'+nd+'</b>/3</span><span class="bchev">'+CHEV+'</span></button>';
+  h+='<div class="bcoll'+(briefOpen?" open":"")+'"><div><div class="logbook">';
+  h+='<div class="lbh"><span>Bitácora · '+esc(shortD(cur))+'</span><span>'+(pre?"Propuesta del coach":(empty?"Sin registro":"Orden en curso"))+'</span></div>';
+  for(var i=0;i<3;i++){var dn=m.pd&&m.pd[i],ext=!!mx[i],gone=pre&&rm[i],val=m.p?m.p[i]:"",fd=ext?"Tarea externa · hoy":(gone?"Libre · tarea propia":(val&&val!==cp.p[i]&&!mf[i]?"Tarea propia · hoy":(mf[i]||cp.feed[i])));
+    h+='<div class="lgl'+(dn?" done":"")+(gone?" gone":"")+'"><div class="pr'+(dn?" done":"")+'"><span class="n">'+pad(i+1)+'</span><input data-p="'+i+'" value="'+esc(val)+'" placeholder="'+esc(ext?"Tarea externa para hoy (trámite, entrega, encargo…)":(gone?"Sugerencia quitada · escribe la tuya":cp.p[i]))+'">'+
+      (pre&&!gone&&!val?'<button type="button" class="sgx" data-rm="'+i+'" aria-label="Quitar sugerencia">'+XS+'</button>':"")+
+      '<button class="cbx'+(dn?" on":"")+'" data-pd="'+i+'" aria-label="Completada">'+CIRC_SVG+'</button></div>'+
+      '<div class="pmeta'+(dn?" done":"")+'"><span class="tg">'+OTAG[i]+'</span><span class="fd">↳ '+esc(fd)+'</span><span class="xp">+'+OBJXP[i]+' XP</span>'+(past?'':'<button class="lnk" data-x="'+i+'">'+(ext?"Volver a la del coach":"Cambiar por externa")+'</button>')+'</div></div>';}
+  var nrm=rm.filter(Boolean).length;
+  if(pre)h+='<div class="lbtools"><button class="btn sm pri" id="coachOk">Aceptar orden</button><button type="button" class="btn sm" id="coachRf"><span class="rf">↻</span> Refrescar</button>'+(nrm?'<button type="button" class="btn sm" id="coachRs">Restaurar '+nrm+'</button>':"")+'</div><div class="tiny lbnote">Quita la que no aplique, refresca para otras opciones o escribe encima. Cada una cabe en este día.</div>';
   h+='<div class="obonus'+(nd===3?" ok":"")+'">'+(nd===3?"Orden cumplida · +"+(OBJXP[0]+OBJXP[1]+OBJXP[2]+OBJBONUS)+" XP (incluye +"+OBJBONUS+" de bono)":"Las tres cumplidas: +"+OBJBONUS+" XP de bono · llevas "+nd+"/3")+'</div>';
-  h+='<div class="avoid'+(m.avd?" ok":"")+'"><div class="t">'+(m.avd?"Posición tomada · +30 XP":"Lo que estoy evitando hoy")+'</div><div class="row"><input id="avIn" value="'+esc(m.av||"")+'" placeholder="'+esc(cp.av?"El coach sospecha: "+cp.av:"Ej: llamar a ese cliente, mandar el CV…")+'" style="flex:1;min-width:150px"><button class="btn sm '+(m.avd?"":"pri")+'" id="avBtn">'+(m.avd?"Deshacer":"Lo enfrenté")+'</button></div></div>'+
-   '<div class="row" style="margin-top:10px"><button class="btn sm" id="go5">Empezar 5 min ya</button><span class="tiny">Si dudas, no pienses: presiona y empieza.</span></div>';
+  h+='</div></div></div>';
   $("missionCard").innerHTML=h;
+  $("avoidCard").innerHTML='<div class="avoid'+(m.avd?" ok":"")+'"><div class="t">'+(m.avd?"Posición tomada · +30 XP":"Lo que estoy evitando hoy")+'</div><div class="row"><input id="avIn" value="'+esc(m.av||"")+'" placeholder="'+esc(cp.av?"El coach sospecha: "+cp.av:"Ej: llamar a ese cliente, mandar el CV…")+'" style="flex:1;min-width:150px"><button class="btn sm '+(m.avd?"":"pri")+'" id="avBtn">'+(m.avd?"Deshacer":"Lo enfrenté")+'</button></div>'+
+    '<div class="row" style="margin-top:10px"><button class="btn sm" id="go5">Empezar 5 min ya</button><span class="tiny">Si dudas, no pienses: presiona y empieza.</span></div></div>';
 }
+function briefProg(){var x=S.days[cur],m=x&&x.m,nd=m&&m.pd?m.pd.filter(Boolean).length:0,b=$("missionCard").querySelector(".bprog");if(b){b.innerHTML="<b>"+nd+"</b>/3";b.classList.toggle("ok",nd===3);}}
 function getM(){var x=getDay(cur,true);x.m=x.m||{p:["","",""],pd:[false,false,false],av:"",avd:false};if(!x.m.x)x.m.x=[0,0,0];if(!x.m.f)x.m.f=["","",""];return x;}
-$("missionCard").addEventListener("input",function(e){
+function misInput(e){
   var i=e.target.getAttribute("data-p");var x;
   if(i!=null){x=getM();x.m.p[+i]=e.target.value;if(!x.m.x[+i]&&e.target.value!==coachPlan(cur).p[+i])x.m.f[+i]="";x.u=Date.now();changed();var fd=e.target.parentNode.nextElementSibling;if(fd&&fd.querySelector(".fd"))fd.querySelector(".fd").textContent="↳ "+(x.m.x[+i]?"Tarea externa · hoy":(e.target.value&&!x.m.f[+i]&&e.target.value!==coachPlan(cur).p[+i]?"Tarea propia · hoy":coachPlan(cur).feed[+i]));}
   if(e.target.id==="avIn"){x=getM();x.m.av=e.target.value;x.u=Date.now();changed();}
-});
-$("missionCard").addEventListener("click",function(e){
+}
+$("missionCard").addEventListener("input",misInput);$("avoidCard").addEventListener("input",misInput);
+function misClick(e){
   var b=e.target.closest("[data-pd]"),x;
-  if(e.target.id==="coachOk"){x=getM();var cp=coachPlan(cur);for(var j=0;j<3;j++)if(!x.m.p[j]&&!x.m.x[j]){x.m.p[j]=cp.p[j];x.m.f[j]=cp.feed[j];}if(!x.m.av&&cp.av)x.m.av=cp.av;x.m.coach=1;x.u=Date.now();changed();sfx("oath");haptic();renderMission();toast("Orden aceptada. Empieza por la #1.");return;}
+  if(e.target.closest("#briefHd")){briefOpen=!briefOpen;var cl=$("missionCard").querySelector(".bcoll");cl.classList.toggle("open",briefOpen);e.target.closest("#briefHd").setAttribute("aria-expanded",briefOpen);$("missionCard").classList.toggle("open",briefOpen);sfx(briefOpen?"page":"tick");haptic();return;}
+  var rb=e.target.closest("[data-rm]");
+  if(rb){x=getM();if(!x.m.rm)x.m.rm=[0,0,0];x.m.rm[+rb.getAttribute("data-rm")]=1;x.u=Date.now();changed();renderMission();sfx("clear");haptic();return;}
+  if(e.target.closest("#coachRs")){x=getM();x.m.rm=[0,0,0];x.u=Date.now();changed();renderMission();sfx("restore");haptic();toast("Sugerencias restauradas");return;}
+  if(e.target.closest("#coachRf")){x=getM();var before=coachPlan(cur).p.join("|");x.m.cv=(x.m.cv||0)+1;x.m.rm=[0,0,0];
+    if(coachPlan(cur).p.join("|")===before)x.m.cv++;x.u=Date.now();changed();renderMission();sfx("page");haptic();
+    qa("#missionCard .lgl").forEach(function(l,k){if(RM)return;l.animate([{opacity:0,transform:"translateX(-8px)"},{opacity:1,transform:"none"}],{duration:260,delay:k*60,easing:"ease-out",fill:"backwards"});});
+    toast("El coach propone otra orden");return;}
+  if(e.target.id==="coachOk"){x=getM();var cp=coachPlan(cur),rmv=x.m.rm||[];for(var j=0;j<3;j++)if(!x.m.p[j]&&!x.m.x[j]&&!rmv[j]){x.m.p[j]=cp.p[j];x.m.f[j]=cp.feed[j];}if(!x.m.av&&cp.av)x.m.av=cp.av;x.m.coach=1;x.u=Date.now();changed();sfx("oath");haptic();renderMission();toast("Orden aceptada. Empieza por la #1.");return;}
   var xb=e.target.closest("[data-x]");
   if(xb){x=getM();var k=+xb.getAttribute("data-x"),cq=coachPlan(cur);x.m.x[k]=x.m.x[k]?0:1;x.m.pd[k]=false;
     if(x.m.x[k]){x.m.p[k]="";x.m.f[k]="";}else{x.m.p[k]=cq.p[k];x.m.f[k]=cq.feed[k];}
@@ -1960,8 +2196,8 @@ $("missionCard").addEventListener("click",function(e){
   if(b){x=getM();var i=+b.getAttribute("data-pd");
     if(!x.m.p[i]){if(x.m.x[i]){toast("Escribe primero la tarea externa.");sfx("fail");return;}var cq2=coachPlan(cur);x.m.p[i]=cq2.p[i];x.m.f[i]=cq2.feed[i];var inp=b.parentNode.querySelector("input");if(inp)inp.value=x.m.p[i];}
     x.m.pd[i]=!x.m.pd[i];x.u=Date.now();invalidate();changed();
-    b.classList.toggle("on",x.m.pd[i]);b.parentNode.classList.toggle("done",x.m.pd[i]);var pm=b.parentNode.nextElementSibling;if(pm)pm.classList.toggle("done",x.m.pd[i]);
-    var nd=x.m.pd.filter(Boolean).length,ob=$("missionCard").querySelector(".obonus");
+    b.classList.toggle("on",x.m.pd[i]);b.parentNode.classList.toggle("done",x.m.pd[i]);var lg=b.closest(".lgl");if(lg)lg.classList.toggle("done",x.m.pd[i]);var pm=b.parentNode.nextElementSibling;if(pm)pm.classList.toggle("done",x.m.pd[i]);
+    var nd=x.m.pd.filter(Boolean).length,ob=$("missionCard").querySelector(".obonus");briefProg();
     if(ob){ob.classList.toggle("ok",nd===3);ob.textContent=nd===3?"Orden cumplida · +"+(OBJXP[0]+OBJXP[1]+OBJXP[2]+OBJBONUS)+" XP (incluye +"+OBJBONUS+" de bono)":"Las tres cumplidas: +"+OBJBONUS+" XP de bono · llevas "+nd+"/3";}
     if(x.m.pd[i]){sfx("objective");burst(b,"#9aab5e",7);if(nd===3){setTimeout(function(){sfx("catdone");},150);toast("Orden cumplida: +"+OBJXP[i]+" XP y +"+OBJBONUS+" de bono");}else toast(OTAG[i]+": +"+OBJXP[i]+" XP");}
     else{sfx("clear");toast(OTAG[i]+": −"+OBJXP[i]+" XP"+(nd===2?" (y −"+OBJBONUS+" de bono)":""));}
@@ -1969,9 +2205,10 @@ $("missionCard").addEventListener("click",function(e){
   if(e.target.id==="avBtn"){x=getM();x.m.avd=!x.m.avd;x.u=Date.now();invalidate();changed();
     if(x.m.avd){sfx("faced");toast("Eso era lo difícil. +30 XP");}else sfx("clear");haptic();renderMission();renderHeader();return;}
   if(e.target.id==="go5"){show("focus");setPreset(5);startTimer();}
-});
+}
+$("missionCard").addEventListener("click",misClick);$("avoidCard").addEventListener("click",misClick);
 
-$("whyLine").onclick=function(){show("sem");sfx("nav");haptic();setTimeout(function(){var w=$("whyCard");if(w){w.scrollIntoView({block:"start",behavior:RM?"auto":"smooth"});w.classList.remove("flashy");void w.offsetWidth;w.classList.add("flashy");}},60);};
+
 
 /* =================== STATS =================== */
 var statsSub="attr";
@@ -1989,7 +2226,7 @@ function renderAttr(){
     html+='<div class="tier">'+TN[t]+'<span class="ln"></span></div>';
     STATS.filter(function(s){return s.t===t;}).forEach(function(s){
       var p=P[s.id],rk=rankOf(p),tr=trackersFor(s.id),li="";
-      tr.h.forEach(function(h){li+='<li><span class="ty">Diario</span><span>'+esc(h.name)+(h.active?"":" <i>(inactivo · "+(h.phase===2?"Fase 2":"apagado")+")</i>")+'</span></li>';});
+      tr.h.forEach(function(h){li+='<li><span class="ty">Diario</span><span>'+esc(h.name)+(h.active?"":" <i>("+(h.phase===2?P2TAG:"inactivo · apagado")+")</i>")+'</span></li>';});
       tr.n.forEach(function(n){li+='<li><span class="ty">Registro</span><span>'+esc(n.n)+'</span></li>';});
       tr.w.forEach(function(w){li+='<li><span class="ty">Semanal</span><span>'+esc(w.name)+'</span></li>';});
       tr.m.forEach(function(m){li+='<li><span class="ty">Hito</span><span>'+esc(m.name)+' · mes '+m.m+(S.ms[m.id]?" ✓":"")+'</span></li>';});
@@ -2018,11 +2255,11 @@ function renderGraf(){
   var t=todayIso(),l30=lastN(30),sc30=l30.map(scoreOf),st=streakInfo();
   var a7=avg(lastN(7).map(scoreOf)),a30=avg(sc30),hero=sc30.filter(function(s){return s!=null&&s>=S.goal;}).length;
   var w=Object.keys(S.days).sort().map(function(k){return S.days[k].n&&S.days[k].n.peso;}).filter(function(v){return v;});
-  var inc=0;l30.forEach(function(d){var x=S.days[d];if(x&&x.n&&x.n.ingreso)inc+=x.n.ingreso;});
+  var incS=moneySplit(l30,"ingreso"),inc=Math.round(incS.mxn);
   var fm=0;l30.forEach(function(d){var x=S.days[d];if(x&&x.n&&+x.n.profundo)fm+=+x.n.profundo;});
   var k=[["Promedio 7 días",a7==null?null:Math.round(a7),""],["Promedio 30 días",a30==null?null:Math.round(a30),""],["Racha actual",st.cur," días","Mejor: "+st.best],["Días héroe (30)",hero,"","Meta ≥ "+S.goal],
     ["Escudos",st.shields," / 3","1 cada 7 días héroe"],["Peso actual",w.length?w[w.length-1]:null," kg",w.length>1?((w[w.length-1]-w[0]>=0?"+":"")+(w[w.length-1]-w[0]).toFixed(1)+" kg desde el inicio"):""],
-    ["Ingreso 30 días",inc," MXN"],["Enfoque 30 días",Math.round(fm/60*10)/10," h"]];
+    ["Ingreso 30 días",inc," MXN",incS.usd?("+ US$"+(Math.round(incS.usd*100)/100).toLocaleString("es-MX")+" aparte"):""],["Enfoque 30 días",Math.round(fm/60*10)/10," h"]];
   $("kpis").innerHTML=k.map(function(a){return '<div class="kpi"><span>'+a[0]+'</span><b data-to="'+(a[1]==null?"":a[1])+'" data-suf="'+a[2]+'">–</b>'+(a[3]?'<em>'+esc(a[3])+'</em>':"")+'</div>';}).join("");
   qa("#kpis b").forEach(function(b){var v=b.getAttribute("data-to");if(v==="")return;var n=parseFloat(v);if(n%1){b.textContent=n.toLocaleString("es-MX")+b.getAttribute("data-suf");}else countUp(b,n,800,b.getAttribute("data-suf"));});
   drawLine();drawCats();drawHeat();drawTrend();
@@ -2071,10 +2308,10 @@ function drawHeat(){
   for(var d=start;d<=end;d=addDays(d,1)){var s=scoreOf(d),c=d>t?"transparent":(st.shielded[d]?"#8aa0b8":colorFor(s));h+='<i title="'+d+(s!=null?" · "+s:"")+'" style="background:'+c+'"></i>';}
   $("heat").innerHTML=h;var el=$("heat");el.scrollLeft=el.scrollWidth;
 }
-var TRENDS=[["score","Puntuación diaria",null]].concat(NUMS.filter(function(n){return !n.type;}).map(function(n){return [n.k,n.n,1];}));
+var TRENDS=[["score","Puntuación diaria",null]].concat(NUMS.filter(function(n){return n.type!=="time";}).map(function(n){return [n.k,n.n+(n.type==="money"?" (MXN equiv.)":""),1];}));
 function drawTrend(){
   var sel=$("trendSel");if(!sel.options.length)sel.innerHTML=TRENDS.map(function(t){return '<option value="'+t[0]+'">'+esc(t[1])+'</option>';}).join("");
-  var k=sel.value||"score",ds=lastN(90),vals=ds.map(function(d){if(k==="score")return scoreOf(d);var x=S.days[d];return x&&x.n&&x.n[k]!=null&&!isNaN(x.n[k])?x.n[k]:null;});
+  var k=sel.value||"score",ds=lastN(90),vals=ds.map(function(d){if(k==="score")return scoreOf(d);var x=S.days[d];if(k==="ingreso"||k==="gasto")return x&&x.n&&x.n[k]!=null&&!isNaN(x.n[k])?moneyMXN(x,k):null;return x&&x.n&&x.n[k]!=null&&!isNaN(x.n[k])?x.n[k]:null;});
   var C=setupCanvas($("trendC"),160),x=C.x,W=C.w,Hh=C.h,pl=34,pr=8,pt=10,pb=16,iw=W-pl-pr,ih=Hh-pt-pb;
   var have=vals.filter(function(v){return v!=null;});
   if(!have.length){x.clearRect(0,0,W,Hh);x.fillStyle="rgba(235,228,209,.42)";x.font="12px \"LM Sans\",sans-serif";x.fillText("Sin datos todavía en los últimos 90 días.",pl,Hh/2);$("trendInfo").textContent="";return;}
@@ -2089,7 +2326,7 @@ function drawTrend(){
     x.restore();
   },900);
   var f=have.slice(0,Math.min(7,have.length)),l=have.slice(-Math.min(7,have.length)),df=avg(l)-avg(f);
-  $("trendInfo").textContent=have.length+" registros · promedio "+(Math.round(avg(have)*10)/10).toLocaleString("es-MX")+" · cambio (primeros vs últimos 7): "+(df>=0?"+":"")+(Math.round(df*10)/10).toLocaleString("es-MX");
+  $("trendInfo").textContent=(k==="ingreso"||k==="gasto"?"USD convertido a "+FX_USD+" MXN (referencia) · ":"")+have.length+" registros · promedio "+(Math.round(avg(have)*10)/10).toLocaleString("es-MX")+" · cambio (primeros vs últimos 7): "+(df>=0?"+":"")+(Math.round(df*10)/10).toLocaleString("es-MX");
 }
 $("trendSel").onchange=function(){drawTrend();sfx("tick");};
 $("mPrev").onclick=function(){mOff--;drawLine();sfx("nav");haptic();};
@@ -2204,9 +2441,9 @@ function renderRev(){
   $("wLabel").textContent=a.getDate()+" "+MES[a.getMonth()].slice(0,3)+" – "+b.getDate()+" "+MES[b.getMonth()].slice(0,3)+" "+b.getFullYear();
   $("wNext").disabled=wk>=weekStart(todayIso());
   var ds=[];for(var i=0;i<7;i++)ds.push(addDays(wk,i));var sc=ds.map(scoreOf),av=avg(sc),hero=sc.filter(function(s){return s!=null&&s>=S.goal;}).length;
-  var fm=0,inc=0;ds.forEach(function(d){var x=S.days[d];if(x&&x.n&&+x.n.profundo)fm+=+x.n.profundo;if(x&&x.n&&x.n.ingreso)inc+=x.n.ingreso;});
+  var fm=0,inc=0;ds.forEach(function(d){var x=S.days[d];if(x&&x.n&&+x.n.profundo)fm+=+x.n.profundo;});var incS=moneySplit(ds,"ingreso");
   var ent=ds.filter(function(d){var x=S.days[d];return x&&x.h&&x.h.ent===1;}).length;
-  $("wKpis").innerHTML=[["Promedio",av==null?"–":Math.round(av)],["Días héroe",hero+"/7"],["Entrenos",ent],["Enfoque",Math.round(fm/6)/10+" h"],["Ingreso","$"+inc.toLocaleString("es-MX")],["Días registrados",sc.filter(function(s){return s!=null;}).length+"/7"]].map(function(k){return '<div class="kpi"><span>'+k[0]+'</span><b>'+k[1]+'</b></div>';}).join("");
+  $("wKpis").innerHTML=[["Promedio",av==null?"–":Math.round(av)],["Días héroe",hero+"/7"],["Entrenos",ent],["Enfoque",Math.round(fm/6)/10+" h"],["Ingreso",moneyTxt(incS)],["Días registrados",sc.filter(function(s){return s!=null;}).length+"/7"]].map(function(k){return '<div class="kpi"><span>'+k[0]+'</span><b>'+k[1]+'</b></div>';}).join("");
   var r=getRev(false)||{c:{}};
   var items=weekItems(wk),done=items.filter(function(w){return r.c&&r.c[w.id];}).length;
   $("wkCount").textContent=done+"/"+items.length;
@@ -2242,7 +2479,8 @@ function renderSet(){
   $("swAuto").classList.toggle("on",S.settings.autosave);$("swSound").classList.toggle("on",S.settings.sound);$("swLite").classList.toggle("on",S.settings.lite);
   $("vol").value=S.settings.vol;$("vol").style.setProperty("--p",S.settings.vol+"%");
   $("slotMax").value=String(S.settings.slots||7);
-  $("whyIn").value=S.why;$("startDate").value=S.start;$("goal").value=S.goal;
+  $("whyIn").value=S.why;$("startDate").value=S.start;$("startDate").min=todayIso();$("startDate").max=addDays(todayIso(),7);
+  $("startInfo").innerHTML=dayNum()>=1?"Campaña en marcha desde el "+esc(shortD(S.start))+". Puedes reprogramar el Día 1 entre hoy y el "+esc(shortD(addDays(todayIso(),7)))+" (reinicia el conteo).":"Día 1: <b>"+esc(shortD(S.start))+"</b>. Puedes moverlo como máximo una semana adelante (hasta el "+esc(shortD(addDays(todayIso(),7)))+"). Lo que hagas antes cuenta como puntos honorarios.";$("goal").value=S.goal;
   $("lastExp").textContent=S.meta.lastExport?("Último archivo guardado: "+fmtDT(S.meta.lastExport)):"Aún no guardas un archivo. Guárdalo en Archivos/iCloud cada semana como respaldo.";
   var sl=getSlots();$("slotCount").textContent=sl.length+"/"+(S.settings.slots||7);
   $("slots").innerHTML=sl.length?sl.map(function(s,i){return '<div class="slot"><div class="i"><b>'+fmtDT(s.t)+'</b><small>'+esc(s.sum||"")+'</small></div><button class="btn sm" data-restore="'+i+'">Restaurar</button></div>';}).join(""):'<p class="tiny">Presiona Guardar para crear tu primer punto de guardado.</p>';
@@ -2263,8 +2501,9 @@ document.addEventListener("keydown",function(e){if(habOpen&&e.key==="Escape")ope
 function renderHabEdit(){
   $("habCount").textContent=S.habits.filter(function(h){return h.active&&h.phase!==9;}).length+" activos";
   var hs=S.habits.filter(function(h){return h.phase!==9;}).sort(function(a,b){return a.order-b.order;});
+  renderP2();
   $("hList").innerHTML=hs.map(function(h){
-    return '<div class="hedit" data-h="'+h.id+'"><div class="row"><button class="sw'+(h.active?" on":"")+'" data-f="active"></button><input type="text" data-f="name" value="'+esc(h.name)+'"></div>'+
+    return '<div class="hedit" data-h="'+h.id+'">'+(h.phase===2&&!h.active?'<div class="p2tag">'+P2TAG+'</div>':"")+'<div class="row"><button class="sw'+(h.active?" on":"")+'" data-f="active"></button><input type="text" data-f="name" value="'+esc(h.name)+'"></div>'+
     '<div class="row"><select data-f="cat">'+CATS.map(function(c){return '<option value="'+c.id+'"'+(c.id===h.cat?" selected":"")+'>'+esc(c.n)+'</option>';}).join("")+'</select><select class="wsel" data-f="w">'+[1,2,3].map(function(w){return '<option value="'+w+'"'+(w===h.w?" selected":"")+'>Peso '+w+'</option>';}).join("")+'</select>'+(h.phase===2?'<span class="tag" style="background:rgba(167,139,250,.2);color:#c4b5fd">Fase 2</span>':"")+'</div>'+
     '<div class="row"><input type="text" data-f="min" value="'+esc(h.min)+'" placeholder="Versión mínima"></div><div class="row"><input type="text" data-f="ifthen" value="'+esc(h.ifthen)+'" placeholder="Si… entonces…"></div>'+
     '<div class="tiny" style="margin-top:4px">Stats: '+(h.s.length?h.s.map(function(s){return STATMAP[s]?STATMAP[s].n:s;}).join(" · "):"ninguna")+'</div></div>';
@@ -2276,7 +2515,7 @@ $("hList").addEventListener("click",function(e){var b=e.target.closest('[data-f=
   var x=S.days[todayIso()];if(x&&x.a){if(h.active&&x.a.indexOf(h.id)<0)x.a.push(h.id);if(!h.active)x.a=x.a.filter(function(i){return i!==h.id;});}
   invalidate();changed();sfx(h.active?"toggle":"toggleOff");haptic();});
 $("addHab").onclick=function(){var h={id:"c"+uid(),cat:"espiritu",name:"Nuevo hábito",w:1,phase:1,min:"",ifthen:"",s:[],active:true,order:S.habits.length};S.habits.push(h);reindex();var x=S.days[todayIso()];if(x&&x.a)x.a.push(h.id);changed();renderHabEdit();sfx("toggle");};
-$("phase2").onclick=function(){var n=0;S.habits.forEach(function(h){if(h.phase===2&&!h.active){h.active=true;n++;var x=S.days[todayIso()];if(x&&x.a&&x.a.indexOf(h.id)<0)x.a.push(h.id);}});invalidate();changed();renderSet();if(n){celebrate("FASE 2","ACELERACIÓN",n+" hábitos nuevos activos");}else toast("La Fase 2 ya está activa");};
+$("phase2").onclick=function(){var n=p2Activate("manual");invalidate();changed();renderSet();if(n){celebrate("FASE 2","ACELERACIÓN",n+" hábitos nuevos activos");}else toast("La Fase 2 ya está activa");};
 function sw(id,key,cb){$(id).onclick=function(){S.settings[key]=!S.settings[key];this.classList.toggle("on",S.settings[key]);persist(true);if(cb)cb();sfx(S.settings[key]?"toggle":"toggleOff");haptic();};}
 sw("swAuto","autosave",function(){toast(S.settings.autosave?"Autoguardado activado":"Autoguardado apagado: usa Guardar antes de salir");if(S.settings.autosave)persist(true);});
 sw("swSound","sound",function(){if(S.settings.sound){Sfx.unlock();Sfx.prewarm();}});
@@ -2286,7 +2525,11 @@ $("vol").addEventListener("change",function(){sfx("check",.6);});
 $("testSnd").onclick=function(){Sfx.unlock();var seq=["enter","check","save","victory"],gap=[700,900,1400],i=0;(function n(){sfx(seq[i],.6);i++;if(i<seq.length)setTimeout(n,gap[i-1]);})();};
 $("slotMax").onchange=function(){S.settings.slots=+this.value;var sl=getSlots().slice(0,S.settings.slots);setSlots(sl);persist(true);renderSet();};
 $("whyIn").addEventListener("input",function(){S.why=this.value||DEFAULT_WHY;changed();});
-$("startDate").addEventListener("change",function(){if(this.value){S.start=this.value;invalidate();changed();renderHeader();}});
+$("startDate").addEventListener("change",function(){var v=this.value,t=todayIso(),mx=addDays(t,7);
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(v)||v===S.start){this.value=S.start;return;}
+  if(v<t||v>mx){sfx("error");toast("El inicio solo puede ir de hoy al "+shortD(mx)+" (máx. una semana).");this.value=S.start;return;}
+  if(S.start<=t&&dayNum()>1&&!confirm("Ya vas en el Día "+dayNum()+". Mover el inicio reinicia el conteo y lo anterior queda como pre-campaña (puntos honorarios). ¿Seguir?")){this.value=S.start;return;}
+  S.start=v;qOrder=null;invalidate();changed();renderAll();sfx("oath");haptic();toast(v>t?"Día 1 reprogramado: "+shortD(v)+".":"La campaña arranca hoy. Día 1.");});
 $("goal").addEventListener("change",function(){var v=clamp(+this.value||80,10,100);S.goal=v;this.value=v;invalidate();changed();});
 $("slots").addEventListener("click",function(e){var b=e.target.closest("[data-restore]");if(!b)return;var sl=getSlots(),s=sl[+b.getAttribute("data-restore")];if(!s)return;
   if(!confirm("¿Restaurar el punto del "+fmtDT(s.t)+"? Antes se creará un punto de seguridad con tu estado actual."))return;
@@ -2335,7 +2578,7 @@ $("copyJson").onclick=function(){var t=JSON.stringify(S);(navigator.clipboard&&n
 $("expCsv").onclick=function(){
   var keys=Object.keys(S.days).sort(),hs=S.habits.filter(function(h){return h.phase!==9;});
   var rows=[["fecha","puntos"].concat(CATS.map(function(c){return c.n;}),NUMS.map(function(n){return n.n;}),hs.map(function(h){return h.name;}),["nota"])];
-  keys.forEach(function(k){var x=S.days[k];rows.push([k,scoreOf(k)==null?"":scoreOf(k)].concat(CATS.map(function(c){var v=catScore(k,c.id);return v==null?"":Math.round(v);}),NUMS.map(function(n){return x.n&&x.n[n.k]!=null?x.n[n.k]:"";}),hs.map(function(h){var v=x.h[h.id];return v===1?1:(v===.5?.5:(v===-1?0:""));}),[x.note||""]));});
+  keys.forEach(function(k){var x=S.days[k];rows.push([k,scoreOf(k)==null?"":scoreOf(k)].concat(CATS.map(function(c){var v=catScore(k,c.id);return v==null?"":Math.round(v);}),NUMS.map(function(n){return x.n&&x.n[n.k]!=null?(n.type==="money"&&x.n[n.k+"Cur"]==="USD"?x.n[n.k]+" USD":x.n[n.k]):"";}),hs.map(function(h){var v=x.h[h.id];return v===1?1:(v===.5?.5:(v===-1?0:""));}),[x.note||""]));});
   var csv="\ufeff"+rows.map(function(r){return r.map(function(c){c=String(c);return /[",\n;]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c;}).join(",");}).join("\n");
   var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="life-maxxing-"+todayIso()+".csv";document.body.appendChild(a);a.click();setTimeout(function(){a.remove();},1000);sfx("export");
 };
@@ -2354,7 +2597,18 @@ function quoteOrder(){
   qOrder=[0].concat(a);qSeedUsed=S.meta.qseed;return qOrder;
 }
 function quoteFor(n){var o=quoteOrder(),i=((Math.max(1,n)-1)%o.length+o.length)%o.length;return QUOTES365[o[i]];}
+/* pt20: antes del Día 1 no hay frase del día: hay arengas de pre-campaña (varían por día y por lugar) */
+var HYPE=["El 1 de noviembre se acaba el ensayo. Llega con el equipo listo.","Los ejércitos se ganan en la preparación. Estás en la preparación.","Cuenta regresiva activa. Cada día de ahora es munición para el Día 1.",
+ "Nadie te va a avisar dos veces. El despliegue es el 1 de noviembre.","Afila hoy lo que vas a usar mañana.","El hombre que llega al Día 1 ya entrenado empieza con ventaja.",
+ "Pre-campaña: aquí se prueban las armas, no se cuentan las bajas.","Prepara la mochila: rutina, comida, sueño. El resto viene solo.","Lo que practiques esta semana será tu piso el Día 1.",
+ "El reloj ya corre. El campo de batalla abre en días, no en meses.","Haz el reconocimiento del terreno: prueba cada hábito una vez antes del Día 1.","Los puntos de hoy son honorarios. La disciplina de hoy es real.",
+ "Calienta motores. Cuando suene la corneta, no habrá tiempo de calentar.","Último llamado a los indecisos: el 1 de noviembre se forma fila.","Revisa el equipo, firma el porqué y duerme temprano. Se acerca el Día 1.",
+ "No esperes al Día 1 para ser el que va a terminar el Día 365.","Ensayo general. Equivócate aquí, no en la campaña.","Silencio antes de la ofensiva. Úsalo para planear.",
+ "Cada campaña grande empezó con un soldado que llegó puntual.","Faltan días, no excusas."];
+function hypeLine(salt){var t=todayIso(),k=Math.floor(parse(t)/864e5)+(salt||0)*7;return HYPE[((k%HYPE.length)+HYPE.length)%HYPE.length];}
+function preLeft(){var ms=parse(S.start)-Date.now();return Math.max(0,ms);}
 function renderQuote(){
+  if(dnOf(cur)<1){var dl=1-dnOf(cur);$("quoteCard").innerHTML='<div class="k">Pre-campaña · T−'+pad(dl)+'</div><blockquote>“'+esc(hypeLine(dnOf(cur)))+'”</blockquote><div class="qa">— Puesto de mando<span>, las 365 frases arrancan el Día 1</span></div>';return;}
   var n=Math.max(1,dnOf(cur)),q=quoteFor(n);
   $("quoteCard").innerHTML='<div class="k">Frase del día · '+pad3(Math.min(n,999))+'</div><blockquote>“'+esc(q[0])+'”</blockquote><div class="qa">— '+esc(q[1])+(q[2]?'<span>, '+esc(q[2])+'</span>':"")+'</div>';
 }
@@ -2400,20 +2654,25 @@ function shortD(d){var x=parse(d);return ["dom","lun","mar","mié","jue","vie","
 function feedW(w,it){return "Semana · "+it.name+" · vence "+shortD(addDays(w,6));}
 function feedM(m,it){var e=addDays(S.start,monthEndN(m)-1);return "Mes "+m+" · "+it.name+" · vence "+shortD(e);}
 /* Orden del coach: SOLO tareas de hoy. Cada una dice a qué misión semanal/mensual alimenta y cuándo vence esa misión. */
+/* pt20: "Refrescar" sube la variante (m.cv) y saca otras opciones de las mismas listas; el XP por objetivo no cambia */
+var TRALT={hd:["","versión corta (35 min): mismos ejercicios, 1 serie al fallo","en casa: lagartijas, remo con mochila y sentadilla búlgara al fallo"],
+  walk:["Caminata 30 min + 8,000 pasos","Bici o trote suave 30 min + 8,000 pasos","Escaleras 15 min + caminata 20 min","Movilidad 15 min + caminata 30 min con luz solar","Caminata rápida 40 min (ritmo de conversación difícil)"]};
 function coachPlan(d){
-  var n=Math.max(1,dnOf(d)),m=monthOfIso(d),dow=(parse(d).getDay()+6)%7,w=weekStart(d),L=INC[m>=7?7:(m>=4?4:(m>=2?2:1))],inc=L[(n-1)%L.length],f1="Diario · fase "+(m>=7?"IV":(m>=4?"III":(m>=2?"II":"I")))+" del plan de ingreso";
+  var xx=S.days[d],cv=(xx&&xx.m&&xx.m.cv)||0;
+  var n=Math.max(1,dnOf(d)),m=monthOfIso(d),dow=(parse(d).getDay()+6)%7,w=weekStart(d),L=INC[m>=7?7:(m>=4?4:(m>=2?2:1))],inc=L[(n-1+cv)%L.length],f1="Diario · fase "+(m>=7?"IV":(m>=4?"III":(m>=2?"II":"I")))+" del plan de ingreso";
   var mp=monthProg(m),ms=mp.pend.filter(function(x){return x.s.indexOf("riqueza")>=0||x.s.indexOf("estatus")>=0;})[0];
-  if(ms&&dow%2===0){inc="Bloque 1 (90 min) enfocado en tu hito del mes: "+ms.name;f1=feedM(m,ms);}
-  if(dow===6){inc="Revisión semanal (20 min) + plan de prospección de los próximos 7 días";f1="Semana · cierre y revisión · vence "+shortD(addDays(w,6));}
+  if(ms&&dow%2===0&&cv%2===0){inc="Bloque 1 (90 min) enfocado en tu hito del mes: "+ms.name;f1=feedM(m,ms);}
+  if(dow===6&&cv%2===0){inc="Revisión semanal (20 min) + plan de prospección de los próximos 7 días";f1="Semana · cierre y revisión · vence "+shortD(addDays(w,6));}
   var tr=["Heavy Duty A: pecho y espalda, 1 serie al fallo por ejercicio","Caminata 30 min + 8,000 pasos","Caminata 30 min + movilidad 10 min","Heavy Duty B: piernas, hombros y brazos al fallo","Caminata 30 min + postura y cuello","Caminata larga 45 min + luz solar","Caminata 30 min + estiramiento 10 min"][dow],f2="Diario · split de entrenamiento",used={};
+  if(cv){if(dow===0||dow===3){var ha=TRALT.hd[cv%TRALT.hd.length];if(ha)tr=tr.split(",")[0]+", "+ha;}else{var wa=TRALT.walk.filter(function(q){return q!==tr;});tr=wa[(cv-1)%wa.length];}}
   var wp=weekProg(w),dep=wp.items.filter(function(x){return x.id==="w_dep";})[0];
-  if(m>=2&&(dow===2||dow===5)&&dep&&!(S.reviews[w]&&S.reviews[w].c&&S.reviews[w].c.w_dep)){tr=WSTEP.w_dep;f2=feedW(w,dep);used.w_dep=1;}
+  if(m>=2&&(dow===2||dow===5)&&cv%2===0&&dep&&!(S.reviews[w]&&S.reviews[w].c&&S.reviews[w].c.w_dep)){tr=WSTEP.w_dep;f2=feedW(w,dep);used.w_dep=1;}
   var pend=wp.pend.filter(function(x){return !used[x.id];});
   if(dow===6)pend=pend.filter(function(x){return x.id!=="w_fin";});
   pend.sort(function(a,b){return ((WDIFF[b.id]||1)+b.from*.5)-((WDIFF[a.id]||1)+a.from*.5);});
-  var hp=pend[0],t3,f3;
+  var hp=pend.length?pend[cv%pend.length]:null,t3,f3;
   if(hp){t3=WSTEP[hp.id]||("30–45 min: un paso concreto hacia «"+hp.name+"»");f3=feedW(w,hp);}
-  else{var mq=mp.pend.filter(function(x){return x!==ms||dow%2;})[0]||mp.pend[0];
+  else{var mql=mp.pend.filter(function(x){return x!==ms||dow%2;}),mq=mql.length?mql[cv%mql.length]:mp.pend[0];
     if(mq){t3="45 min: el siguiente paso concreto hacia «"+mq.name+"»";f3=feedM(m,mq);}
     else{t3="Cierra el día arriba de "+S.goal+" con la versión mínima de lo que falte";f3="Diario · semana y mes al día";}}
   var soc=pend.filter(function(x){return x!==hp&&/muj|cit|soc|frm/.test(x.id);})[0]||pend[1];
@@ -2497,6 +2756,7 @@ function catWin(cid){
 }
 function catFx(card,cid){
   var ch=card.querySelector(".ch");if(!ch)return;var col=(CATMAP[cid]||{}).c||"#c4a15a";
+  catWinFx(card,ch,col);
   var L=document.createElement("span");L.className="cfx";ch.appendChild(L);setTimeout(function(){if(L.parentNode)L.parentNode.removeChild(L);},1400);
   var pulse=document.createElement("i");pulse.className="cfx-p";pulse.style.background="linear-gradient(90deg,"+col+"55,"+col+"10 70%,transparent)";L.appendChild(pulse);
   pulse.animate([{opacity:0},{opacity:1,offset:.25},{opacity:0}],{duration:RM?600:1000,easing:"ease-out"});
@@ -2539,6 +2799,25 @@ function catFx(card,cid){
     e=el("left:8px;top:"+(H/2-12)+"px;width:24px;height:24px;border-radius:50%;border:1px solid "+col);e.animate([{transform:"scale(.4)",opacity:.9},{transform:"scale(3)",opacity:0}],{duration:900,easing:"ease-out"});
     e=el("left:0;top:"+(H/2)+"px;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(240,230,200,.8),transparent);transform-origin:left");e.animate([{transform:"scaleX(0)",opacity:1},{transform:"scaleX(1)",opacity:0}],{duration:500,easing:"ease-out"});
   }
+}
+
+/* pt20: remate común de área cumplida (~1.5 s, dentro de la tarjeta, debajo de las épicas):
+   destello del símbolo + anillo, barrido de luz, sello "CUMPLIDO" que cae y pulso de brillo de la tarjeta */
+function catWinFx(card,ch,col){
+  card.classList.remove("won");void card.offsetWidth;card.classList.add("won");
+  clearTimeout(card._wt);card._wt=setTimeout(function(){card.classList.remove("won");},1600);
+  if(RM)return;
+  var g=document.createElement("span");g.className="cwin";g.style.setProperty("--c",col);card.appendChild(g);
+  g.animate([{opacity:0},{opacity:1,offset:.22},{opacity:.55,offset:.5},{opacity:0}],{duration:1500,easing:"ease-out"});
+  var sw=document.createElement("i");sw.className="cswp";g.appendChild(sw);
+  sw.animate([{transform:"translateX(-120%) skewX(-18deg)"},{transform:"translateX(320%) skewX(-18deg)"}],{duration:900,delay:180,easing:"cubic-bezier(.45,0,.2,1)",fill:"backwards"});
+  var sy=ch.querySelector(".csym");
+  if(sy){var r=document.createElement("i");r.className="cring";sy.appendChild(r);
+    r.animate([{transform:"scale(.4)",opacity:.95},{transform:"scale(2.6)",opacity:0}],{duration:850,delay:60,easing:"cubic-bezier(.2,.7,.3,1)",fill:"backwards"});
+    var r2=document.createElement("i");r2.className="cring";sy.appendChild(r2);
+    r2.animate([{transform:"scale(.4)",opacity:.7},{transform:"scale(3.4)",opacity:0}],{duration:1050,delay:260,easing:"cubic-bezier(.2,.7,.3,1)",fill:"backwards"});
+    setTimeout(function(){r.remove();r2.remove();},1400);}
+  setTimeout(function(){if(g.parentNode)g.remove();},1600);
 }
 
 /* ===== Acceso rápido por área (Hoy) + botón "volver arriba" ===== */
@@ -2602,6 +2881,33 @@ window.addEventListener("resize",function(){qaDirty=true;ttKick();},{passive:tru
 TT.addEventListener("click",function(){var y=window.pageYOffset;sfx("qup");smoothTo(0,RM?120:Math.round(Math.max(170,Math.min(200,160+y*.01))));});
 var _showQA=show;show=function(v,s){var r=_showQA(v,s);qaDirty=true;ttKick();return r;};
 
+/* =================== pt20: FASE 2 AUTOMÁTICA · FONDO POR SECCIÓN =================== */
+/* Fase 2: se desbloquea sola con 14 días (no tienen que ser seguidos) de 70+ puntos contados desde el Día 1 oficial.
+   El plan (mes 2 · Fundación) pide "promedio ≥ 70 y hábitos Fase 2 activos": este criterio lo vuelve medible. */
+var P2N=14,P2MIN=70,P2TAG="Fase 2 · se desbloquea con "+P2N+" días ≥ "+P2MIN+" pts";
+function p2Count(){var t=todayIso(),n=0;Object.keys(S.days).forEach(function(k){if(k>=S.start&&k<=t){var s=scoreOf(k);if(s!=null&&s>=P2MIN)n++;}});return n;}
+function p2Locked(){return S.habits.filter(function(h){return h.phase===2&&!h.active;});}
+function p2Activate(how){var n=0,x=S.days[todayIso()];p2Locked().forEach(function(h){h.active=true;n++;if(x&&x.a&&x.a.indexOf(h.id)<0)x.a.push(h.id);});if(!S.meta.p2)S.meta.p2={d:todayIso(),how:how};return n;}
+function p2Check(){
+  if(launching||S.meta.p2||!p2Locked().length)return;
+  var c=p2Count();if(c<P2N)return;
+  var n=p2Activate("auto");invalidate();changed();
+  celebrate("FASE 2 DESBLOQUEADA","ACELERACIÓN",P2N+" días ≥ "+P2MIN+" pts · "+n+" hábitos nuevos activos",insignia(xpInfo().lvl),"milestone");
+  if(view==="hoy")setTimeout(renderToday,60);
+}
+function renderP2(){
+  var el=$("p2Box");if(!el)return;var c=Math.min(P2N,p2Count()),on=!!S.meta.p2||!p2Locked().length;
+  el.innerHTML='<div class="p2h"><b>Fase 2 · Aceleración</b><span>'+(on?"Desbloqueada":c+"/"+P2N)+'</span></div>'+
+    '<div class="bar"><i style="transform:scaleX('+(on?1:c/P2N)+')"></i></div>'+
+    '<div class="tiny">'+(on?(S.meta.p2&&S.meta.p2.how==="auto"?"Se desbloqueó sola el "+esc(shortD(S.meta.p2.d))+".":"Activa."):"Se desbloquea sola con "+P2N+" días de "+P2MIN+"+ puntos desde el Día 1 (no tienen que ser seguidos). Te faltan "+(P2N-c)+". El botón de abajo la activa antes si quieres.")+'</div>';
+  el.classList.toggle("on",on);
+}
+
+/* Fondo vivo por sección: una sola capa animada (transform/opacity) por sección, fundido de 500 ms al cambiar.
+   Solo anima la capa activa; se pausa en segundo plano, al hacer scroll, tras 8 s sin tocar y con movimiento reducido. */
+var SEC_BG={hoy:"dawn",stats:"topo",focus:"vig",sem:"map",set:"steel"};
+function setSecBg(v){var k=SEC_BG[v]||"dawn";document.body.setAttribute("data-bg",k);}
+
 /* =================== NAVEGACIÓN =================== */
 var VIEWS=["hoy","stats","focus","sem","set"],view="hoy";
 function moveInd(){var bs=qa("#nav button"),i=VIEWS.indexOf(view),b=bs[i],ind=$("navInd");if(!b)return;ind.style.width=b.offsetWidth+"px";ind.style.transform="translateX("+(b.offsetLeft-6)+"px)";}
@@ -2609,7 +2915,7 @@ function show(v,silent){
   var prev=VIEWS.indexOf(view),nx=VIEWS.indexOf(v);
   qa("#nav button").forEach(function(b){b.classList.toggle("act",b.getAttribute("data-v")===v);});
   qa(".view").forEach(function(s){s.classList.remove("act","in","inL");});
-  var el=$("v-"+v);view=v;el.classList.add("act");if(!RM)el.classList.add(nx>=prev?"in":"inL");
+  var el=$("v-"+v);view=v;el.classList.add("act");setSecBg(v);if(!RM)el.classList.add(nx>=prev?"in":"inL");
   moveInd();
   renderView();
   window.scrollTo(0,0);requestAnimationFrame(function(){window.scrollTo(0,0);});
@@ -2697,8 +3003,8 @@ var launching=false;
 function runLaunch(done){
   var L=$("launch");if(!L){if(done)done();return;}
   var n=dayNum(),lv=xpInfo(),st=streakInfo();
-  $("lDay").textContent="DÍA "+(n>=1?pad3(Math.min(n,999)):"000")+" / 365";
-  $("lSub").textContent=rankName(lv.lvl)+" · Racha "+st.cur+" · "+(n>=1?phaseName(n):"Antes del inicio");
+  if(n>=1){$("lDay").textContent="DÍA "+pad3(Math.min(n,999))+" / 365";$("lSub").textContent=rankName(lv.lvl)+" · Racha "+st.cur+" · "+phaseName(n);}
+  else{$("lDay").textContent="PRE-CAMPAÑA · T−"+pad(1-n);$("lSub").textContent=hypeLine(1);} // pt20: cuenta regresiva y arenga antes del Día 1
   launching=true;var stage=-1,tm=[],withSound=false;
   L.classList.remove("gone","out","go","fin","hold","gate","gout");void L.offsetWidth;
   function hold(skip){if(stage!==0)return;stage=1;tm.forEach(clearTimeout);tm=[];Sfx.pause(false);if(skip)L.classList.add("fin");L.classList.add("hold");L.setAttribute("aria-label","Toca para entrar");}
@@ -2742,7 +3048,7 @@ function onbSlides(){
   '<div class="on">03 · Rango y ascensos</div><h1>La experiencia <em>te asciende.</em></h1><p>Cada hábito, cada bloque de enfoque y cada objetivo da XP. Con XP subes de rango: de Recluta a General.</p><div class="ins-row">'+lvls.map(function(l){return '<div>'+insignia(l,l>=9?"#e3c98d":"#c4a15a")+'<small>'+rankName(l).replace("General de ","Gral. ")+'</small></div>';}).join("")+'</div><p>Tus 44 atributos van de <b>E a S</b> según lo que registras. No se suben con palabras, se suben con días.</p>',
   '<div class="on">04 · La línea no se rompe</div><h1>Nunca falles <em>dos veces seguidas.</em></h1><ol class="ol"><li><span class="ix">I</span><div><b>Racha</b>Días seguidos en 50 o más.</div></li><li><span class="ix">II</span><div><b>Escudos</b>Cada 7 días héroe ganas un escudo (máximo 3). Un escudo cubre un mal día.</div></li><li><span class="ix">III</span><div><b>Modo día difícil</b>Si fallaste ayer, hoy la meta es solo la versión mínima. Reinicio limpio.</div></li></ol>',
   '<div class="on">05 · Suministros y respaldo</div><h1>Tu progreso <em>es munición.</em> Cuídalo.</h1><ol class="ol"><li><span class="ix">I</span><div><b>Guardar</b>El botón de arriba crea un punto de guardado, como en un juego. El autoguardado también está activo.</div></li><li><span class="ix">II</span><div><b>Cada domingo</b>Ajustes → <b>Guardar archivo</b>, a iCloud o Archivos. Así lo pasas a la PC.</div></li><li><span class="ix">III</span><div><b>Pantalla de inicio</b>En Safari: Compartir → <b>Agregar a inicio</b>. Se abre como app, a pantalla completa.</div></li></ol>',
-  '<div class="on">06 · Juramento</div><h1>Firma <em>tu porqué.</em></h1><p>Lo vas a leer cada vez que entres.</p><textarea id="oWhy" rows="4">'+esc(S.why)+'</textarea><div class="row" style="margin-top:12px"><div style="flex:1"><div class="tiny" style="margin-bottom:4px">Día 1 de la campaña</div><input type="date" id="oStart" value="'+esc(S.start)+'"></div></div><div class="setrow" style="margin-top:12px"><div class="l">Efectos de sonido</div><button class="sw'+(S.settings.sound?" on":"")+'" id="oSnd"></button></div>'
+  '<div class="on">06 · Juramento</div><h1>Firma <em>tu porqué.</em></h1><p>Lo vas a leer cada vez que entres.</p><textarea id="oWhy" rows="4">'+esc(S.why)+'</textarea><div class="row" style="margin-top:12px"><div style="flex:1"><div class="tiny" style="margin-bottom:4px">Día 1 de la campaña</div><input type="date" id="oStart" value="'+esc(S.start)+'" min="'+todayIso()+'" max="'+(addDays(todayIso(),7)>S.start?addDays(todayIso(),7):S.start)+'"></div></div><div class="setrow" style="margin-top:12px"><div class="l">Efectos de sonido</div><button class="sw'+(S.settings.sound?" on":"")+'" id="oSnd"></button></div>'
   ];
 }
 function onbGo(i,silent){
@@ -2763,7 +3069,7 @@ function openOnb(){
 }
 function closeOnb(){
   var w=$("oWhy").value.trim(),d=$("oStart").value;
-  if(w)S.why=w;if(/^\d{4}-\d{2}-\d{2}$/.test(d))S.start=d;
+  if(w)S.why=w;if(/^\d{4}-\d{2}-\d{2}$/.test(d)&&d!==S.start){var tt=todayIso(),hi=addDays(tt,7);if(defaultStart()>hi)hi=defaultStart();S.start=d<tt?tt:(d>hi?hi:d);}
   S.settings.sound=$("oSnd").classList.contains("on");
   onbMem=true;S.meta.onb=1;try{localStorage.setItem(ONBKEY,"1");}catch(e){}
   changed();
@@ -2779,18 +3085,18 @@ $("replayIntro").onclick=function(){openOnb();sfx("page");};
 load();reindex();
 (function ensureToday(){var t=todayIso(),x=S.days[t];if(x&&x.a){activeHabits().forEach(function(h){if(x.a.indexOf(h.id)<0&&!hasMarks(x))x.a.push(h.id);});}})();
 makeIcon();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(makeIcon);
-document.body.classList.toggle("lite",!!S.settings.lite);
+document.body.classList.toggle("lite",!!S.settings.lite);setSecBg(view);
 renderAll();
 requestAnimationFrame(moveInd);setTimeout(moveInd,300);
 var firstRun=!onbDone();
-runLaunch(function(){if(firstRun)openOnb();else{if(!S.meta.lastSave)toast("Presiona Guardar cuando cierres el día.");else launchNudge();if(streakInfo().miss2&&warnDay!==todayIso()){warnDay=todayIso();setTimeout(function(){sfx("warning");},450);}}});
+runLaunch(function(){setTimeout(p2Check,400);if(firstRun)openOnb();else{if(!S.meta.lastSave)toast("Presiona Guardar cuando cierres el día.");else launchNudge();if(streakInfo().miss2&&warnDay!==todayIso()){warnDay=todayIso();setTimeout(function(){sfx("warning");},450);}}});
 /* volver tras más de 10 min en segundo plano = nueva entrada */
 var hidAt=0;document.addEventListener("visibilitychange",function(){if(document.hidden)hidAt=Date.now();else if(hidAt&&Date.now()-hidAt>6e5&&!launching&&$("onb").classList.contains("gone"))runLaunch();});
 
 /* gancho para pruebas */
 window.__lm={get S(){return S;},drawIcon:drawIcon,STATS:STATS,WEEKLY:WEEKLY,MILESTONES:MILESTONES,NUMS:NUMS,trackersFor:trackersFor,statPowers:statPowers,scoreOf:scoreOf,streakInfo:streakInfo,xpInfo:xpInfo,
   sfx:sfx,Sfx:Sfx,sndMeasure:sndMeasure,show:show,saveGame:saveGame,getSlots:getSlots,importText:importText,mergeIn:mergeIn,
-  seed:function(o){S=normalize(o);reindex();invalidate();syncLvl();persist(true);renderAll();},render:renderAll,launch:runLaunch,onb:openOnb,epic:epic,insignia:insignia,rankName:rankName,setCur:function(d){cur=d;renderToday();}};
+  seed:function(o){S=normalize(o);reindex();invalidate();syncLvl();persist(true);renderAll();},render:renderAll,launch:runLaunch,onb:openOnb,epic:epic,insignia:insignia,rankName:rankName,setCur:function(d){cur=d;renderToday();},p2Count:p2Count,p2Check:p2Check,xpI:xpInfo};
 })();
 </script>
 </body>
