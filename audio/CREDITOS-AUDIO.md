@@ -38,6 +38,7 @@ CC0 no exige atribución; se acredita igual por cortesía. La fuente BY-SA sí e
 | opengameart.org/content/come-on-lets-run | Nocturnal_Vanguard | CC0 | órdenes del oficial (pt36) |
 | opengameart.org/content/chain-winch-sounds | bart | CC0 | tintineo de alambre de espino (pt36) |
 | opengameart.org/content/muffled-distant-explosion | NenadSimic | CC0 | explosiones apagadas / aturdimiento (pt36) |
+| BigSoundBank / LaSonotheque nº 3023 y 3024 «Marching in #1» y «#2» (bigsoundbank.com/marching-in-1-s3023.html · marching-in-2-s3024.html) | Joseph Sardin | CC0 | tropa marchando a lo lejos fuera del barracón, *Lagartijas* mañana (pt37; pasos troceados y reordenados en bucle, 4 filas, distancia y reverberación exterior) |
 
 ## Síntesis propia (sin muestras de terceros)
 Silbato de oficial de las demás escenas (silbato de bola con trino; *La carga* usa ahora la grabación real de abajo), chasquido supersónico (onda N) y zumbido de bala, motor de avión
